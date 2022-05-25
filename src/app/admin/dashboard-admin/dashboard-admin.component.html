@@ -1,0 +1,24 @@
+
+<app-navbar-admin></app-navbar-admin>
+
+<div class="container-fluid">                
+
+    <!-- Content Row -->
+    <div style="display: block" *ngIf="chartReady">
+        <canvas mdbChart
+          
+          [chartType]="chartType"
+          [datasets]="chartDatasets"
+          [labels]="chartLabels"
+          [colors]="chartColors"
+          
+          [legend]="true"
+          (chartHover)="chartHovered($event)"
+          (chartClick)="chartClicked($event)">
+        </canvas>
+      </div>
+
+    <!-- Content Row -->
+<!-- /.container-fluid -->
+
+</div>
