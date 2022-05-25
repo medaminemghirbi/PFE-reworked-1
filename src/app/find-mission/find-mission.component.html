@@ -10,8 +10,8 @@
                 <div class="row g-5 align-items-end">
                     <div class="col-lg-6 text-center text-lg-start">
                         <h1 class="text-white mb-4 animated slideInDown">Welcome To Missions List </h1>
-                        
-                     
+
+
                     </div>
                     <div class="col-lg-6 text-center text-lg-start">
 
@@ -31,11 +31,11 @@
 
                 <!-- Sidebar filter section -->
                 <section id="sidebar">
-                    <p> Home | <b>All Missions</b></p>
+                    <p style="color:black ;"> Home | <b>All Missions</b></p>
                     <div class="border-bottom pb-2 ml-2">
                         <h4 id="burgundy">Filters</h4>
                     </div>
-                    <div class="py-2 border-bottom ml-3">
+                    <div class="py-2 border-bottom ml-3" style="color:black ;">
                         <h6 class="font-weight-bold">Categories</h6>
                         <div id="orange"><span class="fa fa-minus"></span></div>
                         <form>
@@ -51,7 +51,7 @@
 
                         </form>
                     </div>
-                    <div class="py-2 border-bottom ml-3">
+                    <div class="py-2 border-bottom ml-3" style="color:black ;">
 
                         <h6 class="font-weight-bold"> Budget </h6>
                         <div id="orange"><span class="fa fa-minus"></span></div>
@@ -98,7 +98,7 @@
                                 <ng-select [multiple]="true" placeholder="Select Language" formControlName="language_id"
                                     name="language_id" [(ngModel)]="selectedDefaultLanguage"
                                     (change)="missionbylanguages()">
-                                    <ng-option *ngFor="let l of languages" [value]="l.id">
+                                    <ng-option *ngFor="let l of languages" [value]="l.id" style="color:black ;">
                                         {{l.name}}
 
                                     </ng-option>
@@ -118,7 +118,7 @@
                 <!-- products section -->
                 <div class="container">
                     <div class="row">
-                        <div class="card col-md-12 p-3" *ngFor="let produit of dataArray">
+                        <div class="card col-md-12 p-3" *ngFor="let produit of dataArray" style="color:black ;">
                             <div *ngIf="produit !=null" class="row ">
 
                                 <div class="col-md-12">
@@ -126,7 +126,8 @@
                                         <a style="text-decoration: none;" [routerLink]="['/detail-mission',produit.id]">
                                             <h6 class="card-title">{{produit.title}}</h6>
                                         </a>
-                                        <i class="fas fa-clock">&nbsp; {{produit.beginingDate}}</i>
+                                        <i style="color:black ;" class="fas fa-clock">&nbsp;
+                                            {{produit.beginingDate}}</i>
                                         &nbsp;&nbsp; <img [src]="logo1 " width="25" height="25" />{{produit.budget}} DT
 
                                         &nbsp;
