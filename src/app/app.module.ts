@@ -18,6 +18,9 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule ,ReactiveFormsModule} from '@angular/forms';
+import { ServiceComponent } from './service/service.component';
+import { ButtonsModule, CardsModule, MDBBootstrapModule } from 'angular-bootstrap-md';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
   declarations: [
@@ -34,14 +37,19 @@ import { FormsModule ,ReactiveFormsModule} from '@angular/forms';
     MissionbycategoryComponent,
     ForgotPasswordComponent,
     ResetPasswordComponent,
+    ServiceComponent,
     
   ],
   imports: [
     BrowserModule,
     AppRoutingModule ,
     HttpClientModule ,
+    CardsModule,
+    ButtonsModule ,
     FormsModule , 
+    MDBBootstrapModule,
     ReactiveFormsModule,
+    NgSelectModule,
     
 
   ],
