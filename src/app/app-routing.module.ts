@@ -1,8 +1,17 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AddCategoryComponent } from './admin/add-category/add-category.component';
+import { AllSkillsComponent } from './admin/all-skills/all-skills.component';
+import { AllusersComponent } from './admin/allusers/allusers.component';
 import { CategoriesComponent } from './admin/categories/categories.component';
 import { DashboardAdminComponent } from './admin/dashboard-admin/dashboard-admin.component';
+import { ProfilAdminComponent } from './admin/profil-admin/profil-admin.component';
+import { ActiveMissionsClientComponent } from './client/active-missions-client/active-missions-client.component';
+import { DashbordClientComponent } from './client/dashbord-client/dashbord-client.component';
+import { EditProfilClientComponent } from './client/edit-profil-client/edit-profil-client.component';
+import { EndedMissionsClientComponent } from './client/ended-missions-client/ended-missions-client.component';
+import { MissionsClientComponent } from './client/missions-client/missions-client.component';
+import { PostulatedMissionsClientComponent } from './client/postulated-missions-client/postulated-missions-client.component';
 import { ActiveMissionsFreelancerComponent } from './freelancer/active-missions-freelancer/active-missions-freelancer.component';
 import { DashboardFreelancerComponent } from './freelancer/dashboard-freelancer/dashboard-freelancer.component';
 import { EducationComponent } from './freelancer/education/education.component';
@@ -46,6 +55,12 @@ const routes: Routes = [
   { path: 'dashboard-admin', canActivate: [AuthGuard], component: DashboardAdminComponent },
   { path: 'categories', canActivate: [AuthGuard], component: CategoriesComponent },
   { path: 'addcategory', canActivate: [AuthGuard], component: AddCategoryComponent },
+  { path: 'dashboard-admin', canActivate: [AuthGuard], component: DashboardAdminComponent },
+  { path: 'categories', canActivate: [AuthGuard], component: CategoriesComponent },
+  { path: 'missions', canActivate: [AuthGuard], component: MissionsClientComponent },
+  { path: "allskills", canActivate: [AuthGuard], component: AllSkillsComponent },
+  { path: 'allusers', canActivate: [AuthGuard], component: AllusersComponent },
+  { path: 'profil-admin', canActivate: [AuthGuard], component: ProfilAdminComponent },
 
 
   /*********************************** freelancer *************************************/
@@ -57,12 +72,17 @@ const routes: Routes = [
   { path: 'ended-missions-freelancer', canActivate: [AuthGuard], component: EndedMissionsFreelancerComponent },
   { path: 'profil-freelancer', canActivate: [AuthGuard], component: ProfilFreelancerComponent },
   { path: 'education', canActivate: [AuthGuard], component: EducationComponent },
-  { path:'experience', canActivate:[AuthGuard] ,component:ExperienceComponent},
-  { path:'skills', canActivate:[AuthGuard]  , component:SkillsComponent},
-  
+  { path: 'experience', canActivate: [AuthGuard], component: ExperienceComponent },
+  { path: 'skills', canActivate: [AuthGuard], component: SkillsComponent },
+
 
   /*********************************** client *************************************/
-
+  { path: 'dashboard-client', canActivate: [AuthGuard], component: DashbordClientComponent },
+  { path: 'postulated-missions-client', canActivate: [AuthGuard], component: PostulatedMissionsClientComponent },
+  { path: 'active-missions-client', canActivate: [AuthGuard], component: ActiveMissionsClientComponent },
+  { path: 'ended-missions-client', canActivate: [AuthGuard], component: EndedMissionsClientComponent },
+  { path: "missions-client", canActivate: [AuthGuard], component: MissionsClientComponent },
+  { path: 'edit-client', canActivate: [AuthGuard], component: EditProfilClientComponent },
 
 
 ];

@@ -41,6 +41,17 @@ import { ProfilFreelancerComponent } from './freelancer/profil-freelancer/profil
 import { EducationComponent } from './freelancer/education/education.component';
 import { ExperienceComponent } from './freelancer/experience/experience.component';
 import { SkillsComponent } from './freelancer/skills/skills.component';
+import { AllusersComponent } from './admin/allusers/allusers.component';
+import { ProfilAdminComponent } from './admin/profil-admin/profil-admin.component';
+import { DashbordClientComponent } from './client/dashbord-client/dashbord-client.component';
+import { ClientSiderBarComponent } from './client/client-sider-bar/client-sider-bar.component';
+import { PostulatedMissionsClientComponent } from './client/postulated-missions-client/postulated-missions-client.component';
+import { MissionsClientComponent } from './client/missions-client/missions-client.component';
+import { ActiveMissionsClientComponent } from './client/active-missions-client/active-missions-client.component';
+import { EndedMissionsClientComponent } from './client/ended-missions-client/ended-missions-client.component';
+import { AddmissionComponent } from './client/addmission/addmission.component';
+import { EditProfilClientComponent } from './client/edit-profil-client/edit-profil-client.component';
+import { AllSkillsComponent } from './admin/all-skills/all-skills.component';
 
 
 @NgModule({
@@ -75,6 +86,18 @@ import { SkillsComponent } from './freelancer/skills/skills.component';
     EducationComponent,
     ExperienceComponent,
     SkillsComponent,
+
+    AllusersComponent,
+    ProfilAdminComponent,
+    DashbordClientComponent,
+    ClientSiderBarComponent,
+    PostulatedMissionsClientComponent,
+    MissionsClientComponent,
+    ActiveMissionsClientComponent,
+    EndedMissionsClientComponent,
+    AddmissionComponent,
+    EditProfilClientComponent,
+    AllSkillsComponent,
   
   ],
   imports: [
