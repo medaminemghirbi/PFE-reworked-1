@@ -17,8 +17,13 @@ export class PostulatedMissionsClientComponent implements OnInit {
     id : '' ,
     status  : '',
     mission_id:'',
-    freelancer_id:''
+    freelancer_id:'' ,
+
+    title: '' ,
+    emailfreelancer: '' ,
   }
+
+
   messageErr =''
   
   messageSuccess = '' ;
@@ -106,7 +111,7 @@ export class PostulatedMissionsClientComponent implements OnInit {
     
   }
   
-    getdata(status:string,mission_id:string,freelancer_id:any , id:any){
+    getdata(status:string,mission_id:string,freelancer_id:any , id:any, emailfreelancer:any, title:any){
       
       if(this.missionAcceptedValue !== null){
         this.y = false
@@ -135,6 +140,10 @@ export class PostulatedMissionsClientComponent implements OnInit {
       this.dataMission.status=status
       this.dataMission.mission_id=mission_id
       this.dataMission.freelancer_id=freelancer_id
+
+      this.dataMission.title=title
+      this.dataMission.emailfreelancer=emailfreelancer
+
       console.log(this.dataMission)
   
     }

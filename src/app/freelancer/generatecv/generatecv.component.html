@@ -7,9 +7,9 @@
 <body>
 
     <!-- Sidebar -->
-
-    <app-freelancer-sidebar></app-freelancer-sidebar>
-    <!-- Page Content -->
+    <div class="w3-sidebar w3-light-grey w3-bar-block" style="width:20%">
+        <app-freelancer-sidebar></app-freelancer-sidebar>
+    </div>
 
     <br>
     <div style="margin-left:20%">
@@ -42,7 +42,7 @@
 
                                         <div>
                                             <button (click)="openPDF()" class="btn btn-outline-primary"
-                                                *ngIf="logged_in && role==='freelancer' " routerLink="/edit-freelancer">
+                                                *ngIf="logged_in && role==='freelancer' ">
                                                 Download My CV </button>
                                         </div>
 

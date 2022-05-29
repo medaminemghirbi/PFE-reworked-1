@@ -13,7 +13,22 @@
             <div class="form-group">
               <h6 class="font-weight-bold">Language</h6>
               <div id="orange"><span class="fa fa-minus"></span></div>
-             
+              <form class="formSteps" [formGroup]="stepOneOfOneForm" >
+                <ng-select 
+                [multiple]="true"
+                 placeholder="Select Language"
+                    formControlName="language_id"
+                    name="language_id"
+                      [(ngModel)]="selectedDefaultLanguage"
+                      (change)="getfreelancerbylanguage()" 
+                        >
+                  <ng-option *ngFor="let l of languages" [value]="l.id"   >
+                     {{l.name}} 
+              
+                  </ng-option>
+                  
+               </ng-select>
+                </form>
               <div class="py-3">
                 <h5 class="font-weight-bold">Rating</h5>
                <form >
@@ -44,22 +59,7 @@
                   
             </form>
             </div>
-              <form class="formSteps" [formGroup]="stepOneOfOneForm" >
-                <ng-select 
-                [multiple]="true"
-                 placeholder="Select Language"
-                    formControlName="language_id"
-                    name="language_id"
-                      [(ngModel)]="selectedDefaultLanguage"
-                      (change)="getfreelancerbylanguage()" 
-                        >
-                  <ng-option *ngFor="let l of languages" [value]="l.id"   >
-                     {{l.name}} 
-              
-                  </ng-option>
-                  
-               </ng-select>
-                </form>
+             
                               
             </div>
             </div>
@@ -71,8 +71,18 @@
           
         </section><br><br><br><br>
         <div class="container">
+        
           <div class="row">
-            <div class="col-4 col-sm-4 col-md-4 col-lg-4" *ngFor="let data of dataArray">
+
+            <form class="card-header py-2" >
+            <div class="input-group">
+                <input type="text" name="email" class="form-control" [(ngModel)]="searchedKeyword"  placeholder="Search for..." >
+              
+            </div>
+            </form>
+
+            <div class="col-4 col-sm-4 col-md-4 col-lg-4" *ngFor="let data of dataArray | filter:searchedKeyword ; index as i">
+              <br>
               <div class="our-team">
                 <div class="picture">
                   <a [routerLink]="['/detail-freelancer',data.id]">  <img class="img-fluid" [src]="data.user_image_url"></a>
@@ -83,7 +93,7 @@
                   <h4 class="title" *ngIf="data.earning && data.earning !== 'null' " > {{data.earning}} DT / jour</h4>
                 </div>
                 <ul class="social">
-                  <li><a href="https://codepen.io/collection/XdWJOQ/" class="fa fa-facebook" aria-hidden="true"></a></li>
+                  <li><a href="https://github.com/" class="fa fa-facebook" aria-hidden="true"></a></li>
                
         
                 </ul>

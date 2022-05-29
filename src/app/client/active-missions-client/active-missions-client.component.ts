@@ -4,6 +4,8 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UsersService } from 'src/app/services/users.service';
 import Swal from 'sweetalert2';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas'
 
 @Component({
   selector: 'app-active-missions-client',
@@ -12,27 +14,27 @@ import Swal from 'sweetalert2';
 })
 export class ActiveMissionsClientComponent implements OnInit {
 
-  p:number = 1 ;
+  p: number = 1;
   dataMission = {
-    id : '' ,
-    status  : '',
-    mission_id:'',
-    freelancer_id:''
+    id: '',
+    status: '',
+    mission_id: '',
+    freelancer_id: ''
   }
-  messageErr =''
-  
-  messageSuccess = '' ;
-  title: string ="" ;
-  searchedKeyword!:string;
+  messageErr = ''
+
+  messageSuccess = '';
+  title: string = "";
+  searchedKeyword!: string;
   dataArray: any;
   clientdata: any;
-  submitted: boolean = false ;
-  dataArrayy:any ;
-  dataArrayyy:any ;
+  submitted: boolean = false;
+  dataArrayy: any;
+  dataArrayyy: any;
   update: FormGroup;
 
-  constructor(private usersService:UsersService,private route:Router ,private activatedRoute: ActivatedRoute, ) {
-    this.clientdata = JSON.parse( localStorage.getItem('clientdata') !);
+  constructor(private usersService: UsersService, private route: Router, private activatedRoute: ActivatedRoute) {
+    this.clientdata = JSON.parse(localStorage.getItem('clientdata')!);
     console.log(this.clientdata)
 
     this.update = new FormGroup({
@@ -40,19 +42,31 @@ export class ActiveMissionsClientComponent implements OnInit {
       mission_id: new FormControl(''),
       freelancer_id: new FormControl(''),
     });
-    
+
   }
-  
+
 
   ngOnInit(): void {
-    this.usersService.getrequestacceptedbyclient(this.clientdata.id).subscribe(data=>{
+    this.usersService.getrequestacceptedbyclient(this.clientdata.id).subscribe(data => {
       console.log(data)
-      this.dataArray = data , (err:HttpErrorResponse)=>{
+      this.dataArray = data, (err: HttpErrorResponse) => {
         console.log(err)
-      this.messageErr="We dont't found this mission in our database"} 
+        this.messageErr = "We dont't found this mission in our database"
+      }
+      //console.log(this.dataArray)
+    })
+
+    this.usersService.clienthomedata(this.clientdata.id).subscribe(data=>{
+
+      console.log(data)
+      this.dataArray = data ,
+       (err:HttpErrorResponse)=>{
+        console.log(err)
+      this.messageErr="We dont't found this user in our database"} 
       //console.log(this.dataArray)
     }) 
-    this.usersService.freelancerhomedata(+this.activatedRoute.snapshot.params['id']).subscribe(data=>{
+
+    this.usersService.missionhomedata(this.activatedRoute.snapshot.params['id']).subscribe(data=>{
 
       console.log(data)
       this.dataArrayy = data ,
@@ -67,7 +81,7 @@ export class ActiveMissionsClientComponent implements OnInit {
 
 
 
-  delete(id:any  , i :number){
+  delete(id: any, i: number) {
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -78,9 +92,9 @@ export class ActiveMissionsClientComponent implements OnInit {
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.usersService.deleteRequest(id).subscribe(response=>{
+        this.usersService.deleteRequest(id).subscribe(response => {
           console.log(response)
-          this.dataArray.splice(i,1)   
+          this.dataArray.splice(i, 1)
         })
         Swal.fire(
           'Deleted!',
@@ -89,50 +103,50 @@ export class ActiveMissionsClientComponent implements OnInit {
         )
       }
     })
-   
-    
-  }
-  
-    getdata(status:string,mission_id:string,freelancer_id:any , id:any){
-      this.messageSuccess=''
-      this.dataMission.id=id
-      this.dataMission.status=status
-      this.dataMission.mission_id=mission_id
-      this.dataMission.freelancer_id=freelancer_id
-      console.log(this.dataMission)
-  
-    }
-    updaterequest (f:any){
 
-      let data=f.value
+
+  }
+
+  getdata(status: string, mission_id: string, freelancer_id: any, id: any) {
+    this.messageSuccess = ''
+    this.dataMission.id = id
+    this.dataMission.status = status
+    this.dataMission.mission_id = mission_id
+    this.dataMission.freelancer_id = freelancer_id
+    console.log(this.dataMission)
+
+  }
+  updaterequest(f: any) {
+
+    let data = f.value
     const formData = new FormData();
-    formData.append('status', this.update.value.status );
+    formData.append('status', this.update.value.status);
     formData.append('mission_id', this.update.value.mission_id);
     formData.append('freelancer_id', this.update.value.freelancer_id);
 
     Swal.fire('Whooa!', 'Request Succeffulfy updated !', 'success')
-    this.usersService.updateRequest(this.dataMission.id,formData).subscribe(response=>
-      {
+    this.usersService.updateRequest(this.dataMission.id, formData).subscribe(response => {
       console.log(response)
-      this.submitted = true ;
-        let indexId=this.dataArray.findIndex((obj:any)=>obj.id==this.dataMission.id)
+      this.submitted = true;
+      let indexId = this.dataArray.findIndex((obj: any) => obj.id == this.dataMission.id)
 
-        //this.dataArray[indexId].id=data.id
-        this.dataArray[indexId].status=data.status
-        this.dataArray[indexId].mission_id=data.mission_id
-        this.dataArray[indexId].freelancer_id=data.freelancer_id
-        
-        this.messageSuccess=`this status : ${this.dataArray[indexId].status} is updated`
-        window.location.reload();
-       this.route.navigate(['/postulated-missions-client']);
-      
-      },(err:HttpErrorResponse)=>{
-        console.log(err.message)
-      
-      })
+      //this.dataArray[indexId].id=data.id
+      this.dataArray[indexId].status = data.status
+      this.dataArray[indexId].mission_id = data.mission_id
+      this.dataArray[indexId].freelancer_id = data.freelancer_id
 
-      
-      
-    }
+      this.messageSuccess = `this status : ${this.dataArray[indexId].status} is updated`
+      window.location.reload();
+      this.route.navigate(['/postulated-missions-client']);
+
+    }, (err: HttpErrorResponse) => {
+      console.log(err.message)
+
+    })
+
+
+
+  }
+
 
 }

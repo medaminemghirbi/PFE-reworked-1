@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import {ButtonsModule, CardsModule, ChartsModule,  MDBBootstrapModule, TableModule } from 'angular-bootstrap-md';
+import { ButtonsModule, CardsModule, ChartsModule, MDBBootstrapModule, TableModule } from 'angular-bootstrap-md';
 import { NgSelectModule } from '@ng-select/ng-select';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -52,6 +52,12 @@ import { EndedMissionsClientComponent } from './client/ended-missions-client/end
 import { AddmissionComponent } from './client/addmission/addmission.component';
 import { EditProfilClientComponent } from './client/edit-profil-client/edit-profil-client.component';
 import { AllSkillsComponent } from './admin/all-skills/all-skills.component';
+import { MissionsComponent } from './admin/missions/missions.component';
+import { DiscuterFreelancerComponent } from './client/discuter-freelancer/discuter-freelancer.component';
+import { OrderByPipe } from './order-by.pipe';
+import { DiscuterClientComponent } from './freelancer/discuter-client/discuter-client.component';
+import { GeneratecontratfreelancerComponent } from './freelancer/generatecontratfreelancer/generatecontratfreelancer.component';
+import { GeneratecontratclientComponent } from './client/generatecontratclient/generatecontratclient.component';
 
 
 @NgModule({
@@ -98,27 +104,35 @@ import { AllSkillsComponent } from './admin/all-skills/all-skills.component';
     AddmissionComponent,
     EditProfilClientComponent,
     AllSkillsComponent,
-  
+    MissionsComponent,
+    DiscuterFreelancerComponent,
+    // DiscuterClientComponent,
+    // DiscuterComponent,
+    OrderByPipe,
+    DiscuterClientComponent,
+    GeneratecontratfreelancerComponent,
+    GeneratecontratclientComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule ,
+    HttpClientModule,
     FontAwesomeModule,
     CardsModule,
-    ButtonsModule ,
-    FormsModule , 
+    ButtonsModule,
+    FormsModule,
     MDBBootstrapModule,
     ReactiveFormsModule,
     ChartsModule,
     NgSelectModule,
-    Ng2SearchPipeModule ,
+    Ng2SearchPipeModule,
     NgxPaginationModule,
     TableModule,
     BrowserAnimationsModule,
-    
 
-  ], 
+
+
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })
