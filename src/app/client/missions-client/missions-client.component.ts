@@ -147,7 +147,7 @@ export class MissionsClientComponent implements OnInit {
       formData.append('client_id',this.clientdata.id);
       formData.append('language_id',this.addmissionn.value.language_id);
 
-    Swal.fire('Whooa!', 'Mission Succeffulfy updated !', 'success')
+   
     this.usersService.updateMission(this.dataMission.id,formData).subscribe((response)=> {
       this.date = moment(Date.now()).format("YYYY-MM-DD"); 
       if (data.beginingDate > this.date ) 
@@ -166,6 +166,7 @@ export class MissionsClientComponent implements OnInit {
         this.dataArray[indexId].language_id=data.language_id
 
         this.messageSuccess=`this title : ${this.dataArray[indexId].title} is updated`
+        Swal.fire('Whooa!', 'Mission Succeffulfy updated !', 'success')
         //window.location.reload();
        this.route.navigate(['/missions-client']);
       }
