@@ -9,30 +9,31 @@ import { UsersService } from 'src/app/services/users.service';
 
 @Component({
   selector: 'app-register',
-  templateUrl: './register.component.html', 
+  templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-  messageError:any
-  
-  
-  registerr:any = "https://imgs.bharatmatrimony.com/bmimgs/login/login-otp-banner.png";
-  constructor(private freelancersService:UsersService,private router:Router) { }
+  messageError: any
+
+
+  registerr: any = "https://imgs.bharatmatrimony.com/bmimgs/login/login-otp-banner.png";
+  constructor(private freelancersService: UsersService, private router: Router) { }
 
   ngOnInit(): void {
   }
 
-  register(f:any){
-    let data=f.value
+  register(f: any) {
+    let data = f.value
     console.log(data)
-    this.freelancersService.register(data).subscribe(data=>{
+    this.freelancersService.register(data).subscribe(data => {
       Swal.fire('Whooa!', 'Account succeful created , Acctivate Email to acced account profil!', 'success')
-     // this.router.navigate(['/login'])
-      
+      // this.router.navigate(['/login'])
+
       console.log(data)
-    },(err:HttpErrorResponse)=>{
+    }, (err: HttpErrorResponse) => {
       console.log(err)
-      this.messageError="champs required or not valid"})
+      this.messageError = "champs required or not valid"
+    })
 
   }
 

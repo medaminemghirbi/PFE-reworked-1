@@ -49,7 +49,8 @@
 
                   <td>
 
-                    <button (click)="getdata(item.status,item.mission_id,item.freelancer_id, item.id,  item.freelancer.email,item.mission.title)"
+                    <button
+                      (click)="getdata(item.status,item.mission_id,item.freelancer_id, item.id,  item.freelancer.email,item.mission.title)"
                       class="btn btn-outline-dark" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-edit"
                         aria-hidden="true"></i> Update Request </button>
                   </td>
@@ -107,7 +108,7 @@
 
             <div class="form-group">
               <label for="exampleFormControlInput1">Freelancer </label>
-              <input  type="text" class="form-control" placeholder="Freelancer" [(ngModel)]="dataMission.freelancer_id"
+              <input type="text" class="form-control" placeholder="Freelancer" [(ngModel)]="dataMission.freelancer_id"
                 required formControlName="freelancer_id" readonly style="cursor: not-allowed;" minlength="2"
                 maxlength="20">
             </div>
@@ -118,6 +119,7 @@
                 maxlength="20">
             </div>
 
+         
             <div class="alert alert-success" *ngIf="messageSuccess">
               {{messageSuccess}}
             </div>

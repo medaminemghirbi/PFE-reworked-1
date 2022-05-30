@@ -15,7 +15,6 @@ export class MissionComponent implements OnInit {
   logo: any = "./assets/mission.png";
   logo1: any = "./assets/money-bag.png";
   //search = faSearch;
-  searchedKeyword!:string;
   freelancers: any;
   dataArraye: any = [];
   dataArray: any = [];
@@ -25,11 +24,10 @@ export class MissionComponent implements OnInit {
   messageErr = '';
   produits: any;
   freelancerdata: any;
-  logged_in: any;
+  logged_in: boolean = false;
   role: string = '';
   languagefiltre!: any;
   languageids: any = [];
-  localStorage: any;
   constructor(private usersService: UsersService, private route: Router) {
     this.freelancerdata = JSON.parse(localStorage.getItem('freelancerdata')!);
     this.logged_in = JSON.parse(localStorage.getItem('logged_in')!);
@@ -118,35 +116,40 @@ export class MissionComponent implements OnInit {
   addreview() {
 
   }
-  ///****************************************************  addrequest  ************************************///
+  ///***************************************************  addrequest  ***********************************///
   addrequest(id: any, freelancer_id: any) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: 'Something went wrong!',
+      footer: '<a href="">Why do I have this issue?</a>'
+    })
+
     const formData = new FormData();
     formData.append('mission_id', id);
     formData.append('freelancer_id', this.freelancerdata.id);
     formData.append('status', status);
+    // let data=f.value   
     console.log(formData)
-    //debugger
-    if (this.freelancerdata) {
-      this.usersService.addRequest(formData).subscribe(() => {
+    this.usersService.addRequest(formData).subscribe(() => {
 
-        console.log(formData)
-        //this.submitted = true ;
-        Swal.fire('Saved!', '', 'success')
-        // window.location.reload();
-        this.route.navigate(['/missions-freelancer'])
+      //console.log(data)
+      console.log(formData)
+      //this.submitted = true ;
+      Swal.fire('Saved!', '', 'success')
+      // window.location.reload();
+      this.route.navigate(['/missions-freelancer'])
 
-      });
-
-    } 
-    else{
+    }, (err: HttpErrorResponse) => {
+      this.messageErr = err.error
 
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
-        text: 'You Must be connected to postulate '
-      });
-      this.route.navigate(['/login'])
-    }
+        text: 'You cant postulate twice '
+      })
+
+    });
   }
   addfavoris(id: any, user_id: any) {
 

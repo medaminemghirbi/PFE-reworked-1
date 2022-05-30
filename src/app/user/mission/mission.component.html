@@ -53,24 +53,25 @@
             </div>
           </form>
         </div>
-        <form [formGroup]="languagefiltre">
-          <div class="border-bottom pb-2 ml-2">
-            <div class="form-group">
-              <h6 class="font-weight-bold">Language</h6>
-              <div id="orange"><span class="fa fa-minus"></span></div>
-              <ng-select [multiple]="true" placeholder="Select Language" formControlName="language_id"
-                name="language_id" [(ngModel)]="selectedDefaultLanguage" (change)="missionbylanguages()">
-                <ng-option *ngFor="let l of languages" [value]="l.id">
-                  {{l.name}}
 
-                </ng-option>
+        <div class="border-bottom pb-2 ml-2">
+          <div class="form-group">
+            <h6 class="font-weight-bold">Language</h6>
+            <div id="orange"><span class="fa fa-minus"></span></div>
+            <form class="formSteps" [formGroup]="languagefiltre">
 
+
+              <ng-select class="form-control" appendTo="body" [multiple]="true" appendTo="body"
+                (change)="missionbylanguages()" id="exampleFormControlSelect2" formControlName="language_id"
+                [(ngModel)]="selectedDefaultLanguage">
+                <ng-option *ngFor="let l of languages" [value]="l.id">{{l.name}}</ng-option>
               </ng-select>
 
+            </form>
 
-            </div>
           </div>
-        </form>
+        </div>
+
         <br>
 
 
@@ -79,18 +80,8 @@
       </section>
       <span id="Categorie"></span>
       <div class="container">
-
         <div class="row">
-          
-          <form class="card-header py-2">
-            <div class="input-group">
-              <input type="text" name="title" class="form-control" [(ngModel)]="searchedKeyword"
-                placeholder="Search for...">
-
-            </div>
-          </form>
-
-          <div class="card col-md-12 p-3" *ngFor="let produit of dataArray | filter:searchedKeyword ; index as i">
+          <div class="card col-md-12 p-3" *ngFor="let produit of dataArray">
             <div *ngIf="produit !=null" class="row ">
 
               <div class="col-md-12">

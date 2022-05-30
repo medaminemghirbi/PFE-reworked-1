@@ -86,16 +86,19 @@
 
                                 <div class="form-group">
                                     <label for="exampleFormControlInput1">Duration </label>
-                                    <input type="text" class="form-control" placeholder="duration"
+                                    <input type="number" class="form-control" placeholder="duration"
                                         [(ngModel)]="dataMission.duration" formControlName="duration" required
                                         minlength="2" ngModel />
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleFormControlInput1">BeginigDate </label>
-                                    <input type="text" class="form-control" placeholder="beginingDate"
+                                    <input type="date" class="form-control" placeholder="beginingDate"
                                         [(ngModel)]="dataMission.beginingDate" required name="beginingDate"
                                         formControlName="beginingDate" minlength="2" maxlength="20" ngModel />
                                 </div>
+
+                                <div class="alert alert-danger" *ngIf="messageError">{{messageError}}</div>
+
                                 <div class="form-group">
                                     <label for="exampleFormControlInput1">Budget </label>
                                     <input type="text" class="form-control" placeholder="budget"
@@ -113,10 +116,16 @@
 
                                 <div class="form-group">
                                     <label for="exampleFormControlInput1">Language </label>
-                                    <ng-select [multiple]="true" placeholder="Select Language"
-                                        formControlName="language_id" [(ngModel)]="selectedDefaultLanguage">
-                                        <ng-option *ngFor="let l of languagedata" [value]="l.id">{{l.name}}</ng-option>
-                                    </ng-select>
+                                
+
+                                        <ng-select class="form-control"  [multiple]="true"  style="color: black ;"
+                                        formControlName="language_id"  [(ngModel)]="selectedDefaultLanguage">
+                                        <ng-option *ngFor="let l of languagedata" [value]="l.id"
+                                       >{{l.name}}</ng-option>
+                                      </ng-select>
+                                     
+
+                                    
                                 </div>
 
                                 <div class="form-group">

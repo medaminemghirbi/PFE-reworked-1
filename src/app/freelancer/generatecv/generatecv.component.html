@@ -12,8 +12,13 @@
     </div>
 
     <br>
+    <div style="margin-left:88%">
+        <button (click)="openPDF()" class="btn btn-outline-primary" *ngIf="logged_in && role==='freelancer' ">
+            Download My CV </button>
+    </div> <br>
     <div style="margin-left:20%">
         <div class="container">
+
             <div class="main-body" id="htmlData">
                 <div class="row">
 
@@ -22,29 +27,24 @@
                             <div class="card-body">
                                 <div class="d-flex flex-column align-items-center text-center"
                                     *ngFor="let item of dataArray">
-                                    <img [src]="item.user_image_url" alt="Admin" class="rounded-circle p-1 bg-primary"
+                                    <img [src]="item.user_image_url" class="rounded-circle p-1 bg-primary"
                                         width="110">
-                                    <div class="mt-3">
-                                        <h4>{{item.firstname}} {{item.lastname}}</h4>
-                                        <p class="text-secondary mb-1" *ngIf="item.job && item.job !== 'null' ">
+
+
+                                    <div class="title">
+                                        <h6>{{item.firstname}} {{item.lastname}}</h6>
+                                        <h6 class="title" *ngIf="item.job && item.job !== 'null' ">
                                             {{item.job}}
-                                        </p>
+                                        </h6>
                                         <h6 class="title" *ngIf="item.earning && item.earning !== 'null' ">
                                             {{item.earning}}
                                             DT / jour</h6>
-                                        <p class="text-muted font-size-sm"
-                                            *ngIf="item.adresse && item.adresse !== 'null' ">
-                                            {{item.adresse}}</p>
-                                        <p class="text-muted font-size-sm"
-                                            *ngIf="item.reviews_count && item.reviews_count !== 'null' ">
-                                            {{item.reviews_count}} <i class="fas fa-star"
-                                                style=" color: rgb(10, 10, 94);"></i> </p>
 
-                                        <div>
-                                            <button (click)="openPDF()" class="btn btn-outline-primary"
-                                                *ngIf="logged_in && role==='freelancer' ">
-                                                Download My CV </button>
-                                        </div>
+                                        <h6 class="title">
+                                            {{item.reviews_count}} <i class="fas fa-star"
+                                                style=" color: rgb(10, 10, 94);"></i> </h6>
+
+
 
                                     </div>
                                     <hr class="my-4" *ngIf="item.linkedin ">
@@ -64,7 +64,7 @@
                                                 </path>
                                             </svg>
                                             Linkedin </h6>
-                                        <span class="text-secondary"><a> {{item.linkedin}} </a> </span>
+                                        <span class="title"><a href="{{item.linkedin}}">   Go Link </a> </span>
                                     </li>
                                     <li *ngIf="item.github && item.github!== 'null' "
                                         class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
@@ -77,7 +77,9 @@
                                                 </path>
                                             </svg>
                                             Github</h6>
-                                        <span class="text-secondary">{{item.github}} </span>
+                                        <span class="title">  
+                                        <a href="{{item.github}}">   Go Link </a>
+                                        </span>
                                     </li>
 
                                     <li *ngIf="item.instagram && item.instagram!== 'null'"
@@ -90,7 +92,7 @@
                                                 <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
                                                 <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
                                             </svg>Instagram</h6>
-                                        <span class="text-secondary">{{item.instagram}} </span>
+                                        <span class="title"><a href="{{item.instagram}}">   Go Link </a> </span>
                                     </li>
                                     <li *ngIf="item.facebook && item.facebook!== 'null'"
                                         class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
@@ -102,7 +104,7 @@
                                                     d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z">
                                                 </path>
                                             </svg>Facebook</h6>
-                                        <span class="text-secondary">{{item.facebook}} </span>
+                                        <span class="title"><a href="{{item.facebook}}">   Go Link </a> </span>
                                     </li>
                                 </ul>
                             </div>
@@ -118,26 +120,26 @@
                                             <div class="col-sm-3">
                                                 <h6 class="mb-0">Full Name</h6>
                                             </div>
-                                            <div class="col-sm-9 text-secondary">
-                                                {{item.firstname}} {{item.lastname}}
+                                            <div class="col-sm-3 title">
+                                                <h6>{{item.firstname}} {{item.lastname}} </h6>
                                             </div>
                                         </div>
                                         <hr>
                                         <div class="row">
-                                            <div class="col-sm-3">
-                                                <h6 class="mb-0">Email</h6>
+                                            <div class="col-sm-3 title">
+                                                <h6>Email</h6>
                                             </div>
-                                            <div class="col-sm-9 text-secondary">
-                                                {{item.email}}
+                                            <div class="col-sm-7 title">
+                                                <h6> {{item.email}} </h6>
                                             </div>
                                         </div>
                                         <hr *ngIf="item.phone && item.phone!=='null' ">
                                         <div class="row" *ngIf="item.phone && item.phone!=='null' ">
-                                            <div class="col-sm-3">
-                                                <h6 class="mb-0">Phone</h6>
+                                            <div class="col-sm-3 title">
+                                                <h6>Phone</h6>
                                             </div>
-                                            <div class="col-sm-9 text-secondary">
-                                                (+216) {{item.phone}}
+                                            <div class="col-sm-3 title">
+                                                <h6>(+216) {{item.phone}} </h6>
                                             </div>
                                         </div>
                                         <hr *ngIf="item.description && item.description!=='null'">
@@ -145,8 +147,8 @@
                                             <div class="col-sm-3">
                                                 <h6 class="mb-0">Description</h6>
                                             </div>
-                                            <div class="col-sm-9 text-secondary">
-                                                {{item.description}}
+                                            <div class="col-sm-9 title">
+                                                <h6> {{item.description}} </h6>
                                             </div>
                                         </div>
                                         <hr *ngIf="item.adresse && item.adresse !== 'null' ">
@@ -154,8 +156,8 @@
                                             <div class="col-sm-3">
                                                 <h6 class="mb-0">Address</h6>
                                             </div>
-                                            <div class="col-sm-9 text-secondary">
-                                                {{item.adresse}}
+                                            <div class="col-sm-9 title">
+                                                <h6> {{item.adresse}} </h6>
                                             </div>
                                         </div>
 

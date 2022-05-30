@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import * as moment from 'moment';
 import { UsersService } from 'src/app/services/users.service';
 import Swal from 'sweetalert2';
 
@@ -30,7 +31,7 @@ export class MissionsClientComponent implements OnInit {
   }
   addmissionn: any ;
   messageErr =''
-  
+  messageError : any ;
   messageSuccess = '' ;
   title: string ="" ;
   searchedKeyword!:string;
@@ -38,6 +39,7 @@ export class MissionsClientComponent implements OnInit {
   dataArrayy: any;
   clientdata: any;
   submitted: boolean = false ;
+  date: any;
 
   constructor(private usersService:UsersService,private route:Router) {
     this.clientdata = JSON.parse( localStorage.getItem('clientdata') !);
@@ -146,7 +148,9 @@ export class MissionsClientComponent implements OnInit {
       formData.append('language_id',this.addmissionn.value.language_id);
 
     Swal.fire('Whooa!', 'Mission Succeffulfy updated !', 'success')
-    this.usersService.updateMission(this.dataMission.id,formData).subscribe(response=>
+    this.usersService.updateMission(this.dataMission.id,formData).subscribe((response)=> {
+      this.date = moment(Date.now()).format("YYYY-MM-DD"); 
+      if (data.beginingDate > this.date ) 
       {
       console.log(response)
       this.submitted = true ;
@@ -162,12 +166,27 @@ export class MissionsClientComponent implements OnInit {
         this.dataArray[indexId].language_id=data.language_id
 
         this.messageSuccess=`this title : ${this.dataArray[indexId].title} is updated`
-        window.location.reload();
+        //window.location.reload();
        this.route.navigate(['/missions-client']);
+      }
+      else {
+        this.messageError = "beginingDate must be after current date"
+        console.log(data.beginingDate)
+        console.log(this.date)
+      
+      }
       
       },(err:HttpErrorResponse)=>{
         console.log(err.message)
-      
+        this.messageError = "champs required or not valid !"
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'champs required or not valid !' ,
+          position: 'top-end',
+            showConfirmButton: false,
+            timer: 1500
+        })    
       })
 
       
