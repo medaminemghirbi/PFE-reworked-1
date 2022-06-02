@@ -28,6 +28,7 @@ export class MissionComponent implements OnInit {
   role: string = '';
   languagefiltre!: any;
   languageids: any = [];
+  searchedKeyword : any ;
   constructor(private usersService: UsersService, private route: Router) {
     this.freelancerdata = JSON.parse(localStorage.getItem('freelancerdata')!);
     this.logged_in = JSON.parse(localStorage.getItem('logged_in')!);
@@ -51,7 +52,7 @@ export class MissionComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.usersService.getAllMissions().subscribe(data => {
+    this.usersService.gethomemissions().subscribe(data => {
       console.log(data)
       this.dataArray = data, (err: HttpErrorResponse) => {
         console.log(err)
@@ -83,7 +84,7 @@ export class MissionComponent implements OnInit {
     this.getallmiss()
   }
   getallmiss() {
-    this.usersService.getAllMissions().subscribe(data => {
+    this.usersService.gethomemissions().subscribe(data => {
       console.log(data)
       this.dataArray = data, (err: HttpErrorResponse) => {
         console.log(err)
@@ -118,13 +119,7 @@ export class MissionComponent implements OnInit {
   }
   ///***************************************************  addrequest  ***********************************///
   addrequest(id: any, freelancer_id: any) {
-    Swal.fire({
-      icon: 'error',
-      title: 'Oops...',
-      text: 'Something went wrong!',
-      footer: '<a href="">Why do I have this issue?</a>'
-    })
-
+   
     const formData = new FormData();
     formData.append('mission_id', id);
     formData.append('freelancer_id', this.freelancerdata.id);
@@ -137,7 +132,7 @@ export class MissionComponent implements OnInit {
       console.log(formData)
       //this.submitted = true ;
       Swal.fire('Saved!', '', 'success')
-      // window.location.reload();
+     // window.location.reload();
       this.route.navigate(['/missions-freelancer'])
 
     }, (err: HttpErrorResponse) => {
@@ -146,7 +141,7 @@ export class MissionComponent implements OnInit {
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
-        text: 'You cant postulate twice '
+        text: "You can't postulate twice" 
       })
 
     });

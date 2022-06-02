@@ -104,14 +104,26 @@ export class MissionsClientComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         this.usersService.deleteMission(id).subscribe(response=>{
+         
           console.log(response)
-          this.dataArray.splice(i,1)   
+          if (response.status == '200') {
+            Swal.fire(
+              'Deleted!',
+              'Your file has been deleted.',
+              'success'
+            )
+            this.dataArray.splice(i,1) 
+          }
+          if (response.status == '401') {
+            Swal.fire(
+              'not Deleted!',
+              'Your file has been not deleted.',
+              'error'
+            )
+          }
+            
         })
-        Swal.fire(
-          'Deleted!',
-          'Your file has been deleted.',
-          'success'
-        )
+        
       }
     })
    

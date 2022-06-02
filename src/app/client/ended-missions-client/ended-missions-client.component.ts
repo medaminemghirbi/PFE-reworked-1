@@ -90,7 +90,7 @@ export class EndedMissionsClientComponent implements OnInit {
 
     this.invokeStripe();
   }
-
+  
   makePayment(amount: number) {
     const paymentHandler = (<any>window).StripeCheckout.configure({
       key: 'pk_test_51L00opGaJ06Z6Byyjfj3hFyq68h7PWfyWOY09BBzRbq1holLZ0kFsffIYFSgERSLhIQ6Exes0clS8mTgs5exfdx600OYzsGDOx',
@@ -101,7 +101,6 @@ export class EndedMissionsClientComponent implements OnInit {
       },
 
     });
-
     const paymentstripe = (stripeToken: any) => {
       this.checkout.makePayment(stripeToken, amount).subscribe((data: any) => {
         console.log(data);
@@ -120,7 +119,6 @@ export class EndedMissionsClientComponent implements OnInit {
       amount: amount * 100,
     });
   }
-
   invokeStripe() {
     if (!window.document.getElementById('stripe-script')) {
       const script = window.document.createElement('script');
@@ -141,8 +139,6 @@ export class EndedMissionsClientComponent implements OnInit {
     }
   }
 
-
-
   pay(data: any) {
     this.checkout.paywithkonnect(data).subscribe(response => {
       this.paydata = response;
@@ -153,11 +149,6 @@ export class EndedMissionsClientComponent implements OnInit {
       console.log(response);
     });
   }
-
-
-
-
-
 
   delete(id: any, i: number) {
     Swal.fire({

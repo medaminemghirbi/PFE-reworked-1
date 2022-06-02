@@ -6,55 +6,48 @@
 
 <body>
 
-<!-- Sidebar -->
+  <!-- Sidebar -->
 
-<app-admin-siderbar></app-admin-siderbar>
-<!-- Page Content -->
+  <app-admin-siderbar></app-admin-siderbar>
+  <!-- Page Content -->
 
-<br>
-<div style="margin-left:20%">
+  <br>
+  <div style="margin-left:20%">
 
 
-  <div id="wrapper">
+    <div id="wrapper">
 
-    <div id="content-wrapper"  class="d-flex flex-column">
-  
+      <div id="content-wrapper" class="d-flex flex-column">
+
         <!-- Main Content -->
         <div id="content">
-                <div class="container-fluid">
+          <div class="container-fluid">
 
-                    <div style="display: block" *ngIf="chartReady">
-                        <canvas mdbChart
-                          
-                          [chartType]="chartType"
-                          [datasets]="chartDatasets"
-                          [labels]="chartLabels"
-                          [colors]="chartColors"
-                          
-                          [legend]="true"
-                          (chartHover)="chartHovered($event)"
-                          (chartClick)="chartClicked($event)">
-                        </canvas>
-                      </div>
+            <div style="display: block" *ngIf="chartReady">
+              <canvas mdbChart [chartType]="chartType" [datasets]="chartDatasets" [labels]="chartLabels"
+                [colors]="chartColors" [options]="chartOptions" [legend]="true" (chartHover)="chartHovered($event)"
+                (chartClick)="chartClicked($event)">
+              </canvas>
+            </div>
 
-  
-                </div>
- 
-  
+
+          </div>
+
+
+        </div>
+
+
+      </div>
+
     </div>
 
-  
+
+    <div class="w3-container">
+
     </div>
-  
-</div>
 
+  </div>
 
-<div class="w3-container">
-
-</div>
-
-</div>
-      
 </body>
-</html>
 
+</html>

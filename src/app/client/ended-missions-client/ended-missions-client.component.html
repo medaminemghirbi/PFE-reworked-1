@@ -58,9 +58,9 @@
                   <td>
                     <div style="text-align:center;" id="myPaypalButtons"></div>
 
-                    <button
-                      (click)='pay({receiverWallet: "62878e13e09cf74322391371",amount:item.budget,firstName:"y",lastName:"x",phoneNumber: "58277084",email:item.freelancer.email  })'
-                      class="btn btn-outline-warning"> Konnect Service </button>
+                    <button (click)='pay({receiverWallet: "62878e13e09cf74322391371",amount:item.budget,firstName:"y",lastName:"x",
+                      phoneNumber: "58277084",email:item.freelancer.email  })' class="btn btn-outline-warning"> Konnect
+                      Service </button>
                   </td>
                   <td> <button (click)="makePayment(item.budget )" class="btn btn-outline-success"> Stripe </button>
                   </td>

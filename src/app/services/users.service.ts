@@ -146,12 +146,16 @@ export class UsersService {
     return this.http.get(`${environment.urlBackend}` + 'missions/')
   }
 
+  gethomemissions() {
+    return this.http.get(`${environment.urlBackend}` + 'homemissions/')
+  }
+
   getOneMission(id: any) {
     return this.http.get(environment.urlBackend + 'missions/' + id)
   }
 
   deleteMission(id: any) {
-    return this.http.delete(environment.urlBackend + 'missions/' + id)
+    return this.http.delete<any>(environment.urlBackend + 'missions/' + id)
   }
 
   updateMission(id: string, newdata: any) {
@@ -215,6 +219,14 @@ export class UsersService {
   }
   countAllHome() {
     return this.http.get<any>(`${environment.urlBackend}` + 'countAllHome/')
+  }
+
+  countAllFreelancer(user_id : any ) {
+    return this.http.get<any>(`${environment.urlBackend}` + 'countAllFreelancer/' + user_id)
+  }
+
+  countAllClient(client_id : any  ) {
+    return this.http.get<any>(`${environment.urlBackend}` + 'countAllClient/' + client_id )
   }
 
   //***********************experience  call api***********************/
