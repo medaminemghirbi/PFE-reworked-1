@@ -16,7 +16,9 @@ export class PostulatedMissionFreelancerComponent implements OnInit {
   dataArray: any = [];
   messageSuccess : any ;
   submitted: boolean = false ;
-
+  searchedKeyword : any ;
+  p:number = 1 ;
+  
   constructor(private route:Router, private usersService:UsersService) {
     this.freelancerdata = JSON.parse( localStorage.getItem('freelancerdata') !);
     console.log(this.freelancerdata)

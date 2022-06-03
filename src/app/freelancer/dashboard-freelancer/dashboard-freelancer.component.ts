@@ -35,6 +35,7 @@ export class DashboardFreelancerComponent implements OnInit {
 
       console.log(data.data[0])
       localStorage.setItem('countAllFreelancerr', JSON.stringify(data.data[0]));
+      
       this.dataArray = data, (err: HttpErrorResponse) => {
         console.log(err)
         this.messageErr = "We dont't found this user in our database"

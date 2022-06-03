@@ -21,6 +21,13 @@
                 <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-primary">My All Missions ({{dataArray.length}})</h6>
                 </div>
+                <form
+                class="card-header py-3" >
+                <div class="input-group">
+                    <input type="text" name="name" class="form-control" [(ngModel)]="searchedKeyword"  placeholder="Search for..." >
+                  
+                </div>
+                </form>
                 <div class="card-body">
                     <div class="table-responsive table-bordered">
                         <table>
@@ -36,7 +43,8 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let item of dataArray  ; index as i">
+                                <tr
+                                    *ngFor="let item of dataArray | paginate: { itemsPerPage: 4, currentPage: p } ; index as i">
                                     <td>{{item.title}}</td>
                                     <!--   <td>{{item.languages.name}}</td> -->
                                     <td>{{item.description}}</td>
@@ -60,6 +68,9 @@
                                 </tr>
                             </tbody>
                         </table>
+                    </div>
+                    <div style="text-align:right;">
+                        <pagination-controls (pageChange)="p = $event"></pagination-controls>
                     </div>
                 </div>
             </div>

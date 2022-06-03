@@ -22,6 +22,13 @@
         <div class="card-header py-3">
           <h6 class="m-0 font-weight-bold text-primary">All Requests ({{dataArray.request.length}})</h6>
         </div>
+        <form
+        class="card-header py-3" >
+        <div class="input-group">
+            <input type="text" name="name" class="form-control" [(ngModel)]="searchedKeyword"  placeholder="Search for..." >
+          
+        </div>
+        </form>
         <div class="card-body">
           <div class="table-responsive">
             <table class="table table-bordered" width="100%">
@@ -35,7 +42,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let item of dataArray.request  ; index as i">
+                <tr *ngFor="let item of dataArray.request |paginate: { itemsPerPage: 4, currentPage: p }  ; index as i">
 
                   <td *ngIf="item.status==='accepted' "> <button class="btn btn-success">{{item.status}}</button>
                   </td>
@@ -69,6 +76,9 @@
             </table>
 
 
+          </div>
+          <div style="text-align:right;">
+            <pagination-controls (pageChange)="p = $event"></pagination-controls>
           </div>
 
         </div>
@@ -119,7 +129,7 @@
                 maxlength="20">
             </div>
 
-         
+
             <div class="alert alert-success" *ngIf="messageSuccess">
               {{messageSuccess}}
             </div>
