@@ -59,7 +59,7 @@ export class MissionsClientComponent implements OnInit {
       beginingDate: new FormControl('', [Validators.required]),
       budget: new FormControl('', [Validators.required]),
       category_id: new FormControl('', [Validators.required]),
-      language_id: new FormControl('', [Validators.required]),
+      language_id: new FormControl(this.selectedItems , [Validators.required]),
     });
 
 
@@ -68,6 +68,7 @@ export class MissionsClientComponent implements OnInit {
 
   onItemSelect(item: any) {
     this.selectedItems.push(item)
+    console.log(item.id )
     this.test1.concat(item.id)
     debugger
   }
@@ -96,7 +97,7 @@ export class MissionsClientComponent implements OnInit {
       this.languagedata = language
 
       this.languagedata.forEach((element: any) => {
-
+        console.log(element)
       });
       (err: HttpErrorResponse) => {
         console.log(err)
@@ -105,8 +106,6 @@ export class MissionsClientComponent implements OnInit {
     })
 
     this.dropdownList = this.languages
-
-
 
     this.dropdownSettings = {
       singleSelection: false,
@@ -214,7 +213,7 @@ export class MissionsClientComponent implements OnInit {
     formData.append('budget', this.addmissionn.value.budget);
     formData.append('category_id', this.addmissionn.value.category_id);
     formData.append('client_id', this.clientdata.id);
-    formData.append('language_id', this.addmissionn.value.language_id);
+    formData.append('language_id', this.selectedItems );
 
     debugger
     this.usersService.updateMission(this.dataMission.id, formData).subscribe((response) => {
@@ -233,9 +232,9 @@ export class MissionsClientComponent implements OnInit {
         this.dataArray[indexId].budget = data.budget
         this.dataArray[indexId].category_id = data.category_id
         //this.dataArray[indexId].language_id = 4
-        this.dataArray[indexId].language_id = data.language_id
-        debugger
-        this.selectedItems = data.language_id
+        this.dataArray[indexId].language_id =  this.selectedItems
+       // debugger
+      //  this.selectedItems = data.language_id
         this.messageSuccess = `this title : ${this.dataArray[indexId].title} is updated`
         Swal.fire('Whooa!', 'Mission Succeffulfy updated !', 'success')
         //window.location.reload();

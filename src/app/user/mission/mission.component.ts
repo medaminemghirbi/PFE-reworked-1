@@ -113,14 +113,14 @@ export class MissionComponent implements OnInit {
 
   }
   ///****************************************************  addrequest  ************************************///
-  addrequest(id: any ) {
+  addrequest(id: any) {
 
-    if ( this.freelancerdata ) {
+    if (this.freelancerdata) {
       const formData = new FormData();
       formData.append('mission_id', id);
       formData.append('freelancer_id', this.freelancerdata.id);
       formData.append('status', status);
-      
+
       this.usersService.addRequest(formData).subscribe(() => {
         this.route.navigate(['/postulated-missions-freelancer'])
         console.log(formData)
@@ -135,50 +135,55 @@ export class MissionComponent implements OnInit {
         })
 
       });
-    }      
+    }
     else {
-        this.route.navigate(['/login'])
+      Swal.fire('you must logged_in !', '', 'error')
+      this.route.navigate(['/login'])
     }
 
 
   }
 
 
-  addfavoris(id: any, user_id: any) {
+  addfavoris(id: any ) {
 
-    const formData = new FormData();
-    formData.append('mission_id', id);
-    formData.append('user_id', this.freelancerdata.id);
-    // let data=f.value   
-    console.log(formData)
-    this.usersService.addFavoris(formData).subscribe(() => {
-      this.route.navigate(['/postulated-missions-freelancer'])
-      //console.log(data)
-      console.log(formData)
-      //this.submitted = true ;
-      Swal.fire({
-        position: 'top-end',
-        icon: 'success',
-        title: 'Your work has been saved',
-        showConfirmButton: false,
-        timer: 1500
-      })
-      // window.location.reload();
+    if (this.freelancerdata) {
+      const formData = new FormData();
+      formData.append('mission_id', id);
+      formData.append('user_id', this.freelancerdata.id);
+      // let data=f.value   
+     // console.log(formData)
+      this.usersService.addFavoris(formData).subscribe(() => {
+        this.route.navigate(['/postulated-missions-freelancer'])
+ 
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Your work has been saved',
+          showConfirmButton: false,
+          timer: 1500
+        })
+        // window.location.reload();
 
 
-    }, (err: HttpErrorResponse) => {
-      this.messageErr = err.error
+      }, (err: HttpErrorResponse) => {
+        this.messageErr = err.error
 
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'You cant twice ',
-        position: 'top-end',
-        showConfirmButton: false,
-        timer: 1500
-      })
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'You cant twice ',
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 1500
+        })
 
-    });
+      });
+    }
+    else {
+      Swal.fire('you must logged_in !', '', 'error')
+      this.route.navigate(['/login'])
+    }
   }
 
 
