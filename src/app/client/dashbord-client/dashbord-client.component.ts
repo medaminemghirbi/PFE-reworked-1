@@ -5,7 +5,6 @@ import { UsersService } from 'src/app/services/users.service';
 import * as pdfMake from 'pdfmake/build/pdfmake.js';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
-
 @Component({
   selector: 'app-dashbord-client',
   templateUrl: './dashbord-client.component.html',
@@ -23,17 +22,17 @@ export class DashbordClientComponent implements OnInit {
   countAllClientt: any;
 
   constructor(private usersService: UsersService) {
-    this.clientdata = JSON.parse(localStorage.getItem('clientdata')!);
+    this.clientdata = JSON.parse(sessionStorage.getItem('clientdata')!);
     console.log(this.clientdata)
 
-    this.countAllClientt = JSON.parse(localStorage.getItem('countAllClientt')!);
+    this.countAllClientt = JSON.parse(sessionStorage.getItem('countAllClientt')!);
   }
 
   ngOnInit(): void {
     this.usersService.countAllClient(this.clientdata.id).subscribe(data => {
 
-      console.log(data.data[0])
-      localStorage.setItem('countAllClientt', JSON.stringify(data.data[0]));
+      console.log(data)
+      sessionStorage.setItem('countAllClientt', JSON.stringify(data.data[0]));
 
       this.dataArray = data, (err: HttpErrorResponse) => {
         console.log(err)

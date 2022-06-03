@@ -4,8 +4,6 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UsersService } from 'src/app/services/users.service';
 import Swal from 'sweetalert2';
-import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas'
 
 @Component({
   selector: 'app-active-missions-client',
@@ -33,8 +31,8 @@ export class ActiveMissionsClientComponent implements OnInit {
   dataArrayyy: any;
   update: FormGroup;
 
-  constructor(private usersService: UsersService, private route: Router, private activatedRoute: ActivatedRoute) {
-    this.clientdata = JSON.parse(localStorage.getItem('clientdata')!);
+  constructor(private usersService: UsersService, private route: Router, private activatedRoute: ActivatedRoute,) {
+    this.clientdata = JSON.parse(sessionStorage.getItem('clientdata')!);
     console.log(this.clientdata)
 
     this.update = new FormGroup({
@@ -47,32 +45,24 @@ export class ActiveMissionsClientComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.usersService.getrequestacceptedbyclient(this.clientdata.id).subscribe(data=>{
+    this.usersService.getrequestacceptedbyclient(this.clientdata.id).subscribe(data => {
       console.log(data)
-      this.dataArray = data , (err:HttpErrorResponse)=>{
+      this.dataArray = data, (err: HttpErrorResponse) => {
         console.log(err)
-      this.messageErr="We dont't found this mission in our database"} 
+        this.messageErr = "We dont't found this mission in our database"
+      }
       //console.log(this.dataArray)
-    }) 
-    this.usersService.freelancerhomedata(this.activatedRoute.snapshot.params['id']).subscribe(data=>{
+    })
+    this.usersService.freelancerhomedata(+this.activatedRoute.snapshot.params['id']).subscribe(data => {
 
       console.log(data)
-      this.dataArrayy = data ,
-       (err:HttpErrorResponse)=>{
-        console.log(err)
-      this.messageErr="We dont't found this user in our database"} 
+      this.dataArrayy = data,
+        (err: HttpErrorResponse) => {
+          console.log(err)
+          this.messageErr = "We dont't found this user in our database"
+        }
       //console.log(this.dataArray)
-    }) 
-
-    this.usersService.missionhomedata(this.activatedRoute.snapshot.params['id']).subscribe(data=>{
-
-      console.log(data)
-      this.dataArrayy = data ,
-       (err:HttpErrorResponse)=>{
-        console.log(err)
-      this.messageErr="We dont't found this user in our database"} 
-      //console.log(this.dataArray)
-    }) 
+    })
 
 
   }
@@ -145,6 +135,5 @@ export class ActiveMissionsClientComponent implements OnInit {
 
 
   }
-
 
 }

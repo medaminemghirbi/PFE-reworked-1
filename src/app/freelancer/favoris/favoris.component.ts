@@ -9,29 +9,30 @@ import Swal from 'sweetalert2';
   styleUrls: ['./favoris.component.css']
 })
 export class FavorisComponent implements OnInit {
-  dataArray: any ;
-  messageErr: any ;
+  dataArray: any;
+  messageErr: any;
   freelancerdata: any;
-  missions:any = "./assets/img/missions.jpeg";
-  
-  constructor(private usersService:UsersService) {
-    this.freelancerdata = JSON.parse( localStorage.getItem('freelancerdata') !);
-    
-    }
+  missions: any = "./assets/img/missions.jpeg";
+
+  constructor(private usersService: UsersService) {
+    this.freelancerdata = JSON.parse(sessionStorage.getItem('freelancerdata')!);
+
+  }
 
   ngOnInit(): void {
 
-    this.usersService.getallfavoris(this.freelancerdata.id).subscribe(data=>{
+    this.usersService.getallfavoris(this.freelancerdata.id).subscribe(data => {
       console.log(data)
-      this.dataArray=data , (err:HttpErrorResponse)=>{
+      this.dataArray = data, (err: HttpErrorResponse) => {
         console.log(err)
-      this.messageErr="We dont't found this user in our database"} 
+        this.messageErr = "We dont't found this user in our database"
+      }
       //console.log(this.dataArray)
-    }) 
+    })
 
   }
-  
-  deleteFavoris(id:any){
+
+  deleteFavoris(id: any) {
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -42,7 +43,7 @@ export class FavorisComponent implements OnInit {
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.usersService.deleteFavoris(id).subscribe(response=>{
+        this.usersService.deleteFavoris(id).subscribe(response => {
           window.location.reload();
         })
         Swal.fire(
@@ -53,8 +54,8 @@ export class FavorisComponent implements OnInit {
       }
     })
 
-    
+
   }
-  
+
 
 }

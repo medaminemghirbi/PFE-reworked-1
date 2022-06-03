@@ -12,37 +12,32 @@ import Swal from 'sweetalert2';
 })
 export class PostulatedMissionsClientComponent implements OnInit {
 
-  p:number = 1 ;
+  p: number = 1;
   dataMission = {
-    id : '' ,
-    status  : '',
-    mission_id:'',
-    freelancer_id:'' ,
-
-    title: '' ,
-    emailfreelancer: '' ,
+    id: '',
+    status: '',
+    mission_id: '',
+    freelancer_id: ''
   }
+  messageErr = ''
 
-
-  messageErr =''
-  
-  messageSuccess = '' ;
-  title: string ="" ;
-  searchedKeyword!:string;
+  messageSuccess = '';
+  title: string = "";
+  searchedKeyword!: string;
   dataArray: any;
   clientdata: any;
-  submitted: boolean = false ;
-  dataArrayy:any ;
-  dataArrayyy:any ;
+  submitted: boolean = false;
+  dataArrayy: any;
+  dataArrayyy: any;
   update: FormGroup;
-  missionAcceptedValue:any=[]
-  test:boolean = false
-  i:any
-  y:any=false
-  testi:any
-  missionId:any
-  constructor(private usersService:UsersService,private route:Router ,private activatedRoute: ActivatedRoute, ) {
-    this.clientdata = JSON.parse( localStorage.getItem('clientdata') !);
+  missionAcceptedValue: any = []
+  test: boolean = false
+  i: any
+  y: any = false
+  testi: any
+  missionId: any
+  constructor(private usersService: UsersService, private route: Router, private activatedRoute: ActivatedRoute,) {
+    this.clientdata = JSON.parse(sessionStorage.getItem('clientdata')!);
     console.log(this.clientdata)
 
     this.update = new FormGroup({
@@ -50,31 +45,31 @@ export class PostulatedMissionsClientComponent implements OnInit {
       mission_id: new FormControl(''),
       freelancer_id: new FormControl(''),
     });
-    
+
   }
-  
+
 
   ngOnInit(): void {
-    this.usersService.getrequestbyclient(this.clientdata.id).subscribe(data=>{
+    this.usersService.getrequestbyclient(this.clientdata.id).subscribe(data => {
       console.log(data)
       this.dataArray = data
       //let missionId = this.dataArray.request[0].mission_id
-/*      debugger 
-
-      if( this.dataArray.request[0].status === "accepted"){
-        this.missionAcceptedValue.push(this.dataArray.request[0])
-        this.testi = true}
-      else
-        this.testi = false*/
-      for(let i=0; i<this.dataArray.request.length; i++){
-        if( this.dataArray.request[i].status === "accepted" ){
+      /*      debugger 
+      
+            if( this.dataArray.request[0].status === "accepted"){
+              this.missionAcceptedValue.push(this.dataArray.request[0])
+              this.testi = true}
+            else
+              this.testi = false*/
+      for (let i = 0; i < this.dataArray.request.length; i++) {
+        if (this.dataArray.request[i].status === "accepted") {
           this.missionAcceptedValue = this.dataArray.request[i]
           this.missionId = this.dataArray.request[i].mission_id
           this.i++
           return
         }
       }
-      if(this.i === 0)
+      if (this.i === 0)
         this.y = true
     })
 
@@ -84,7 +79,7 @@ export class PostulatedMissionsClientComponent implements OnInit {
 
 
 
-  delete(id:any  , i :number){
+  delete(id: any, i: number) {
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -95,10 +90,10 @@ export class PostulatedMissionsClientComponent implements OnInit {
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.usersService.deleteRequest(id).subscribe(response=>{
+        this.usersService.deleteRequest(id).subscribe(response => {
           window.location.reload();
           console.log(response)
-          this.dataArray.splice(i,1)   
+          this.dataArray.splice(i, 1)
         })
         Swal.fire(
           'Deleted!',
@@ -107,51 +102,47 @@ export class PostulatedMissionsClientComponent implements OnInit {
         )
       }
     })
-   
-    
+
+
   }
-  
-    getdata(status:string,mission_id:string,freelancer_id:any , id:any, emailfreelancer:any, title:any){
-      
-      if(this.missionAcceptedValue !== null){
-        this.y = false
-        if( mission_id ===  this.missionAcceptedValue.mission_id && freelancer_id === this.missionAcceptedValue.freelancer_id ){
-          this.test = true
-          this.y = true
-        }
-        else{
-          this.test = false
-        }
 
-        if(this.missionId != mission_id){
-          this.test = true
-          this.y = true
+  getdata(status: string, mission_id: string, freelancer_id: any, id: any) {
 
-        }
-
-      }
-      else{
+    if (this.missionAcceptedValue !== null) {
+      this.y = false
+      if (mission_id === this.missionAcceptedValue.mission_id && freelancer_id === this.missionAcceptedValue.freelancer_id) {
         this.test = true
         this.y = true
       }
-      
-      this.messageSuccess=''
-      this.dataMission.id=id
-      this.dataMission.status=status
-      this.dataMission.mission_id=mission_id
-      this.dataMission.freelancer_id=freelancer_id
+      else {
+        this.test = false
+      }
 
-      this.dataMission.title=title
-      this.dataMission.emailfreelancer=emailfreelancer
+      if (this.missionId != mission_id) {
+        this.test = true
+        this.y = true
 
-      console.log(this.dataMission)
-  
+      }
+
     }
-    updaterequest (f:any){
+    else {
+      this.test = true
+      this.y = true
+    }
 
-      let data=f.value
+    this.messageSuccess = ''
+    this.dataMission.id = id
+    this.dataMission.status = status
+    this.dataMission.mission_id = mission_id
+    this.dataMission.freelancer_id = freelancer_id
+    console.log(this.dataMission)
+
+  }
+  updaterequest(f: any) {
+
+    let data = f.value
     const formData = new FormData();
-    formData.append('status', this.update.value.status );
+    formData.append('status', this.update.value.status);
     formData.append('mission_id', this.update.value.mission_id);
     formData.append('freelancer_id', this.update.value.freelancer_id);
     Swal.fire({
@@ -163,31 +154,30 @@ export class PostulatedMissionsClientComponent implements OnInit {
     }).then((result) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
-        this.usersService.updateRequest(this.dataMission.id,formData).subscribe(response=>
-          {
-           
+        this.usersService.updateRequest(this.dataMission.id, formData).subscribe(response => {
+
           console.log(response)
-          this.submitted = true ;
-            let indexId=this.dataArray.findIndex((obj:any)=>obj.id==this.dataMission.id)
-    
-            //this.dataArray[indexId].id=data.id
-            this.dataArray[indexId].status=data.status
-            this.dataArray[indexId].mission_id=data.mission_id
-            this.dataArray[indexId].freelancer_id=data.freelancer_id
-            
-            this.messageSuccess=`this status : ${this.dataArray[indexId].status} is updated`
-            
-           this.route.navigate(['/postulated-missions-client']);
-          
-          },(err:HttpErrorResponse)=>{
-            Swal.fire({
-              icon: 'error',
-              title: 'Oops...',
-              text: 'You cant update twice!',
-              footer: '<a href="">Why do I have this issue?</a>'
-            })
-          
+          this.submitted = true;
+          let indexId = this.dataArray.findIndex((obj: any) => obj.id == this.dataMission.id)
+
+          //this.dataArray[indexId].id=data.id
+          this.dataArray[indexId].status = data.status
+          this.dataArray[indexId].mission_id = data.mission_id
+          this.dataArray[indexId].freelancer_id = data.freelancer_id
+
+          this.messageSuccess = `this status : ${this.dataArray[indexId].status} is updated`
+
+          this.route.navigate(['/postulated-missions-client']);
+
+        }, (err: HttpErrorResponse) => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'You cant update twice!',
+            footer: '<a href="">Why do I have this issue?</a>'
           })
+
+        })
         Swal.fire('Saved!', '', 'success')
         window.location.reload();
       } else if (result.isDenied) {
@@ -196,16 +186,16 @@ export class PostulatedMissionsClientComponent implements OnInit {
     })
 
 
-    
-      
-    }
-    alert(){
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'You cant update twice!',
-        footer: '<a href="">Why do I have this issue?</a>'
-      })
-      console.log("clicked")
-    }
+
+
+  }
+  alert() {
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: 'You cant update twice!',
+      footer: '<a href="">Why do I have this issue?</a>'
+    })
+    console.log("clicked")
+  }
 }

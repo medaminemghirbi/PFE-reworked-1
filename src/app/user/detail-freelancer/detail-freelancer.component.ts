@@ -19,10 +19,10 @@ export class DetailFreelancerComponent implements OnInit {
   arrayData: any[] = []
   colorsBootstrap = ["success", "info", "warning", "danger", "primary", "secondary", "dark", "light",]
   constructor(private activatedRoute: ActivatedRoute, private usersService: UsersService) {
-    this.logged_in = JSON.parse(localStorage.getItem('logged_in')!);
+    this.logged_in = JSON.parse(sessionStorage.getItem('logged_in')!);
     console.log(this.logged_in)
 
-    this.role = JSON.parse(localStorage.getItem('role')!);
+    this.role = JSON.parse(sessionStorage.getItem('role')!);
     console.log(this.role)
 
   }
@@ -84,6 +84,7 @@ export class DetailFreelancerComponent implements OnInit {
     })
 
   }
+
   golinkedin() {
     var result = this.dataArray.map(function (a: any) { return a.linkedin; });
     window.open(result);
@@ -100,5 +101,4 @@ export class DetailFreelancerComponent implements OnInit {
     var result = this.dataArray.map(function (a: any) { return a.instagram; });
     window.open(result);
   }
-
 }

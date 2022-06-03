@@ -8,18 +8,18 @@ import { UsersService } from 'src/app/services/users.service';
   styleUrls: ['./client-sider-bar.component.css']
 })
 export class ClientSiderBarComponent implements OnInit {
-  constructor(public UsersService:UsersService, public router:Router) { 
+  constructor(public UsersService: UsersService, public router: Router) {
 
   }
 
   ngOnInit(): void {
-  
+
   }
-  logout(){
+  logout() {
     this.UsersService.logout();
     this.router.navigate(['/login']);
-    localStorage.clear()
+    sessionStorage.clear()
 
-   
+
   }
 }

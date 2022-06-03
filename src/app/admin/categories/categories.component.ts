@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Component, OnInit,Input, Output,EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { UsersService } from 'src/app/services/users.service';
 import Swal from 'sweetalert2';
@@ -13,33 +13,33 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
   styleUrls: ['./categories.component.css']
 })
 export class CategoriesComponent implements OnInit {
-  addcategorie! :  FormGroup;
-  messageErr="" ;
-  image:any;
-  submitted : boolean = false ;
-  dataArray:any = []
-  p:number = 1 ;
+  addcategorie!: FormGroup;
+  messageErr = "";
+  image: any;
+  submitted: boolean = false;
+  dataArray: any = []
+  p: number = 1;
 
   //categories :Category[] = [] ;
-  messageSuccess = '' ;
-  name: string ="" ;
-  searchedKeyword!:string;
+  messageSuccess = '';
+  name: string = "";
+  searchedKeyword!: string;
 
-  dataCat={
-    id : '',
-    name:'',
-    avatar:'' ,
-   /* averagePayment:0 ,
-    period:0,
-    start_date:'',
-    end_date:'',
-    */
+  dataCat = {
+    id: '',
+    name: '',
+    avatar: '',
+    /* averagePayment:0 ,
+     period:0,
+     start_date:'',
+     end_date:'',
+     */
   }
 
-  update! :  FormGroup;
+  update!: FormGroup;
 
 
-  constructor(private usersService:UsersService,private route:Router) { 
+  constructor(private usersService: UsersService, private route: Router) {
     this.update = new FormGroup({
       name: new FormControl(''),
       avatar: new FormControl(''),
@@ -51,29 +51,27 @@ export class CategoriesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.usersService.getAllcategories().subscribe(data=>{
+    this.usersService.getAllcategories().subscribe(data => {
       // debugger
-      console.log(data)
-      
-      this.dataArray=data , (err:HttpErrorResponse)=>{
-        console.log(err)
-      this.messageErr="We dont't found this category in our database"} 
-      //console.log(this.dataArray)
-    }) 
+
+      this.dataArray = data, (err: HttpErrorResponse) => {
+        this.messageErr = "We dont't found this category in our database"
+      }
+    })
   }
 
-  key = 'id' ;
-  reverse: boolean = false ;
+  key = 'id';
+  reverse: boolean = false;
 
   sort(key: string) {
-    this.key = key ;
-    this.reverse = !this.reverse ;
+    this.key = key;
+    this.reverse = !this.reverse;
   }
-  details(id:any){
-    this.route.navigate(['/categories/'+id])
+  details(id: any) {
+    this.route.navigate(['/categories/' + id])
   }
 
-  delete(id:any  , i :number){
+  delete(id: any, i: number) {
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -84,9 +82,8 @@ export class CategoriesComponent implements OnInit {
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.usersService.deleteCat(id).subscribe(response=>{
-          console.log(response)
-          this.dataArray.splice(i,1)   
+        this.usersService.deleteCat(id).subscribe(response => {
+          this.dataArray.splice(i, 1)
         })
         Swal.fire(
           'Deleted!',
@@ -96,26 +93,25 @@ export class CategoriesComponent implements OnInit {
       }
     })
 
-    
-  }
-
-  getdata(name:string,image_url:string,id:any){
-    this.messageSuccess=''
-    this.dataCat.name= name 
-    this.dataCat.avatar =image_url 
-    this.dataCat.id= id 
-    console.log(this.dataCat)
 
   }
-  fileChange(event:any) {
-    this.image =event.target.files[0];
-    
+
+  getdata(name: string, image_url: string, id: any) {
+    this.messageSuccess = ''
+    this.dataCat.name = name
+    this.dataCat.avatar = image_url
+    this.dataCat.id = id
+
   }
-  
-  updatenewcat(f:any){
-    let data=f.value
+  fileChange(event: any) {
+    this.image = event.target.files[0];
+
+  }
+
+  updatenewcat(f: any) {
+    let data = f.value
     const formData = new FormData();
-    formData.append('avatar', this.image );
+    formData.append('avatar', this.image);
     formData.append('name', this.update.value.name);
     Swal.fire({
       title: 'Do you want to save the changes?',
@@ -126,23 +122,20 @@ export class CategoriesComponent implements OnInit {
     }).then((result) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
-        this.usersService.updateCat(this.dataCat.id,formData).subscribe(response=>
-          {
-          console.log(response)
-          this.submitted = true ;
-            let indexId=this.dataArray.findIndex((obj:any)=>obj.id==this.dataCat.id)
-    
-            //this.dataArray[indexId].id=data.id
-            this.dataArray[indexId].name=data.name
-            this.dataArray[indexId].avatar=data.avatar
-            this.messageSuccess=`this name : ${this.dataArray[indexId].name} is updated`
-            window.location.reload();
-           this.route.navigate(['/categories']);
-          
-          },(err:HttpErrorResponse)=>{
-            console.log(err.message)
-          
-          })
+        this.usersService.updateCat(this.dataCat.id, formData).subscribe(response => {
+          this.submitted = true;
+          let indexId = this.dataArray.findIndex((obj: any) => obj.id == this.dataCat.id)
+
+          //this.dataArray[indexId].id=data.id
+          this.dataArray[indexId].name = data.name
+          this.dataArray[indexId].avatar = data.avatar
+          this.messageSuccess = `this name : ${this.dataArray[indexId].name} is updated`
+          window.location.reload();
+          this.route.navigate(['/categories']);
+
+        }, (err: HttpErrorResponse) => {
+
+        })
         Swal.fire('Saved!', '', 'success')
       } else if (result.isDenied) {
         Swal.fire('Changes are not saved', '', 'info')
@@ -150,32 +143,29 @@ export class CategoriesComponent implements OnInit {
     })
 
 
-}
-addcategory (f:any){
-  const formData = new FormData();
-  formData.append('avatar', this.image );
-  formData.append('name', this.addcategorie.value.name);
-  let data=f.value
-  
-  console.log(data)
-  
-  this.usersService.addcategory(formData).subscribe( ()=>{
-      console.log(data)
+  }
+  addcategory(f: any) {
+    const formData = new FormData();
+    formData.append('avatar', this.image);
+    formData.append('name', this.addcategorie.value.name);
+    let data = f.value
+
+
+    this.usersService.addcategory(formData).subscribe(() => {
       window.location.reload();
       Swal.fire('Saved!', '', 'success')
-    this.route.navigate(['/categories'])
+      this.route.navigate(['/categories'])
 
-  },(err:HttpErrorResponse)=>{
-    this.messageErr=err.error
-    console.log(err.error)
-     console.log(err.status)
-     
-  }) ;
-}
-fileChangeadd(event:any) {
-  this.image =event.target.files[0];
-  
-}
+    }, (err: HttpErrorResponse) => {
+      this.messageErr = err.error
+
+
+    });
+  }
+  fileChangeadd(event: any) {
+    this.image = event.target.files[0];
+
+  }
 
 
 }

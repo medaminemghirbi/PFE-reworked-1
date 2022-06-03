@@ -12,18 +12,18 @@ declare var apiRTC: any;
 })
 export class DiscuterClientComponent implements OnInit {
 
-  freelancerdata:any;
-  messageErr = '' ;
+  freelancerdata: any;
+  messageErr = '';
   dataArray: any;
-  dataArrayy : any;
-  addmessage: any ;
-  current_user:any
-  ordered_msges:any
+  dataArrayy: any;
+  addmessage: any;
+  current_user: any
+  ordered_msges: any
   conversationFormGroup = this.fb.group({
     name: this.fb.control('', [Validators.required])
   });
-  constructor(private activatedRoute: ActivatedRoute,private fb: FormBuilder,private usersService:UsersService) {
-    this.freelancerdata = JSON.parse( localStorage.getItem('freelancerdata') !);
+  constructor(private activatedRoute: ActivatedRoute, private fb: FormBuilder, private usersService: UsersService) {
+    this.freelancerdata = JSON.parse(sessionStorage.getItem('freelancerdata')!);
 
     this.addmessage = new FormGroup({
       text: new FormControl('', [Validators.required]),
@@ -33,31 +33,33 @@ export class DiscuterClientComponent implements OnInit {
 
   ngOnInit(): void {
     this.current_user = this.freelancerdata
-    this.usersService.getmessagebysender(this.freelancerdata.id,this.activatedRoute.snapshot.params['id']).subscribe(datac=>{
+    this.usersService.getmessagebysender(this.freelancerdata.id, this.activatedRoute.snapshot.params['id']).subscribe(datac => {
       //this.ordered_msges = _.sortBy(datac, function(msg:any){ return msg; });
       console.log(datac)
       debugger
-      this.dataArray = datac , (err:HttpErrorResponse)=>{
+      this.dataArray = datac, (err: HttpErrorResponse) => {
         console.log(err)
-      this.messageErr="We dont't found any message with that id"} 
+        this.messageErr = "We dont't found any message with that id"
+      }
       //console.log(this.dataArray)
-  
-  
-    }) 
-    this.usersService.getmessagebyreceiver(this.activatedRoute.snapshot.params['id'],this.freelancerdata.id).subscribe(data=>{
+
+
+    })
+    this.usersService.getmessagebyreceiver(this.activatedRoute.snapshot.params['id'], this.freelancerdata.id).subscribe(data => {
       console.log(data)
-      this.dataArrayy = data , (err:HttpErrorResponse)=>{
+      this.dataArrayy = data, (err: HttpErrorResponse) => {
         console.log(err)
-      this.messageErr="We dont't found any message with that id"} 
+        this.messageErr = "We dont't found any message with that id"
+      }
       //console.log(this.dataArray)
       debugger
       this.ordered_msges = this.dataArray.message.concat(this.dataArrayy.message)
-     // this.elem = new Date(this.ordered_msges[0]).getTime()
-     /* this.ordered_msges.forEach((element: any) => {
-        if(new Date(element.created_at).getTime() >= this.elem ){
-          this.ord.push(element)
-        }
-      }) */
+      // this.elem = new Date(this.ordered_msges[0]).getTime()
+      /* this.ordered_msges.forEach((element: any) => {
+         if(new Date(element.created_at).getTime() >= this.elem ){
+           this.ord.push(element)
+         }
+       }) */
     })
 
   }
@@ -66,27 +68,27 @@ export class DiscuterClientComponent implements OnInit {
   }
 
 
-  sendmessage(f:any){
+  sendmessage(f: any) {
     const formData = new FormData();
     formData.append('text', this.addmessage.value.text);
     formData.append('sender_id', this.freelancerdata.id);
     formData.append('receiver_id', this.activatedRoute.snapshot.params['id']);
 
-    
+
     window.location.reload();
-  let data=f.value   
-  console.log(data)
-  this.usersService.sendmessage(formData).subscribe( ()=>{
-    window.location.reload();
+    let data = f.value
+    console.log(data)
+    this.usersService.sendmessage(formData).subscribe(() => {
+      window.location.reload();
       console.log(data)
 
 
-  },(err:HttpErrorResponse)=>{
-    this.messageErr=err.error
-    console.log(err.error)
-     console.log(err.status)
-     
-  }) ;
+    }, (err: HttpErrorResponse) => {
+      this.messageErr = err.error
+      console.log(err.error)
+      console.log(err.status)
+
+    });
 
   }
   getOrcreateConversation() {
@@ -102,7 +104,7 @@ export class DiscuterClientComponent implements OnInit {
     //==============================
     // 2/ REGISTER
     //==============================
-    ua.register().then((session:any) => {
+    ua.register().then((session: any) => {
 
       //==============================
       // 3/ CREATE CONVERSATION
@@ -117,9 +119,9 @@ export class DiscuterClientComponent implements OnInit {
         if (streamInfo.listEventType === 'added') {
           if (streamInfo.isRemote === true) {
             conversation.subscribeToMedia(streamInfo.streamId)
-              .then((stream:any) => {
+              .then((stream: any) => {
                 console.log('subscribeToMedia success');
-              }).catch((err:any) => {
+              }).catch((err: any) => {
                 console.error('subscribeToMedia error', err);
               });
           }
@@ -161,11 +163,11 @@ export class DiscuterClientComponent implements OnInit {
               // 7/ PUBLISH LOCAL STREAM
               //==============================
               conversation.publish(localStream);
-            }).catch((err:any) => {
+            }).catch((err: any) => {
               console.error('Conversation join error', err);
             });
 
-        }).catch((err:any) => {
+        }).catch((err: any) => {
           console.error('create stream error', err);
         });
     });

@@ -4,6 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UsersService } from 'src/app/services/users.service';
 import Swal from 'sweetalert2';
+
 @Component({
   selector: 'app-mission',
   templateUrl: './mission.component.html',
@@ -28,14 +29,14 @@ export class MissionComponent implements OnInit {
   role: string = '';
   languagefiltre!: any;
   languageids: any = [];
-  searchedKeyword : any ;
+  searchedKeyword!: string;
   constructor(private usersService: UsersService, private route: Router) {
-    this.freelancerdata = JSON.parse(localStorage.getItem('freelancerdata')!);
-    this.logged_in = JSON.parse(localStorage.getItem('logged_in')!);
+    this.freelancerdata = JSON.parse(sessionStorage.getItem('freelancerdata')!);
+    this.logged_in = JSON.parse(sessionStorage.getItem('logged_in')!);
     this.selectedDefaultLanguage = null
     console.log(this.logged_in)
 
-    this.role = JSON.parse(localStorage.getItem('role')!);
+    this.role = JSON.parse(sessionStorage.getItem('role')!);
     console.log(this.role)
 
     this.languagefiltre = new FormGroup({
@@ -52,7 +53,7 @@ export class MissionComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.usersService.gethomemissions().subscribe(data => {
+    this.usersService.getAllMissions().subscribe(data => {
       console.log(data)
       this.dataArray = data, (err: HttpErrorResponse) => {
         console.log(err)
@@ -84,7 +85,7 @@ export class MissionComponent implements OnInit {
     this.getallmiss()
   }
   getallmiss() {
-    this.usersService.gethomemissions().subscribe(data => {
+    this.usersService.getAllMissions().subscribe(data => {
       console.log(data)
       this.dataArray = data, (err: HttpErrorResponse) => {
         console.log(err)
@@ -117,9 +118,9 @@ export class MissionComponent implements OnInit {
   addreview() {
 
   }
-  ///***************************************************  addrequest  ***********************************///
+  ///****************************************************  addrequest  ************************************///
   addrequest(id: any, freelancer_id: any) {
-   
+
     const formData = new FormData();
     formData.append('mission_id', id);
     formData.append('freelancer_id', this.freelancerdata.id);
@@ -127,13 +128,13 @@ export class MissionComponent implements OnInit {
     // let data=f.value   
     console.log(formData)
     this.usersService.addRequest(formData).subscribe(() => {
-
+      this.route.navigate(['/postulated-missions-freelancer'])
       //console.log(data)
       console.log(formData)
       //this.submitted = true ;
       Swal.fire('Saved!', '', 'success')
-     // window.location.reload();
-      this.route.navigate(['/missions-freelancer'])
+      // window.location.reload();
+
 
     }, (err: HttpErrorResponse) => {
       this.messageErr = err.error
@@ -141,7 +142,7 @@ export class MissionComponent implements OnInit {
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
-        text: "You can't postulate twice" 
+        text: 'You cant postulate twice '
       })
 
     });
@@ -154,7 +155,7 @@ export class MissionComponent implements OnInit {
     // let data=f.value   
     console.log(formData)
     this.usersService.addFavoris(formData).subscribe(() => {
-
+      this.route.navigate(['/postulated-missions-freelancer'])
       //console.log(data)
       console.log(formData)
       //this.submitted = true ;
@@ -166,7 +167,7 @@ export class MissionComponent implements OnInit {
         timer: 1500
       })
       // window.location.reload();
-      this.route.navigate(['/project'])
+
 
     }, (err: HttpErrorResponse) => {
       this.messageErr = err.error
@@ -182,5 +183,7 @@ export class MissionComponent implements OnInit {
 
     });
   }
+
+
 
 }

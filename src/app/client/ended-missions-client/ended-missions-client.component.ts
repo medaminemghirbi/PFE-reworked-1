@@ -41,7 +41,7 @@ export class EndedMissionsClientComponent implements OnInit {
   data: any = [];
 
   constructor(private checkout: CheckoutService, private usersService: UsersService, private route: Router, private activatedRoute: ActivatedRoute) {
-    this.clientdata = JSON.parse(localStorage.getItem('clientdata')!);
+    this.clientdata = JSON.parse(sessionStorage.getItem('clientdata')!);
     console.log(this.clientdata)
 
     this.update = new FormGroup({
@@ -90,10 +90,10 @@ export class EndedMissionsClientComponent implements OnInit {
 
     this.invokeStripe();
   }
-  
+
   makePayment(amount: number) {
     const paymentHandler = (<any>window).StripeCheckout.configure({
-      key: 'pk_test_51L00opGaJ06Z6Byyjfj3hFyq68h7PWfyWOY09BBzRbq1holLZ0kFsffIYFSgERSLhIQ6Exes0clS8mTgs5exfdx600OYzsGDOx',
+      key: 'pk_test_51KsTRVAP0C7RxDT0uiUbJJmJMRnP7ijbDLlO3B1FSfNpRW5FMgbZ7YgTzKcNRXAERgcvjWvsZKLdZMZovyjlxeVX00Ssa2dzww',
       locale: 'auto',
       token: function (stripeToken: any) {
         console.log(stripeToken);
@@ -101,6 +101,7 @@ export class EndedMissionsClientComponent implements OnInit {
       },
 
     });
+
     const paymentstripe = (stripeToken: any) => {
       this.checkout.makePayment(stripeToken, amount).subscribe((data: any) => {
         console.log(data);
@@ -119,6 +120,7 @@ export class EndedMissionsClientComponent implements OnInit {
       amount: amount * 100,
     });
   }
+
   invokeStripe() {
     if (!window.document.getElementById('stripe-script')) {
       const script = window.document.createElement('script');
@@ -127,7 +129,7 @@ export class EndedMissionsClientComponent implements OnInit {
       script.src = 'https://checkout.stripe.com/checkout.js';
       script.onload = () => {
         this.paymentHandler = (<any>window).StripeCheckout.configure({
-          key: 'pk_test_51L00opGaJ06Z6Byyjfj3hFyq68h7PWfyWOY09BBzRbq1holLZ0kFsffIYFSgERSLhIQ6Exes0clS8mTgs5exfdx600OYzsGDOx',
+          key: 'pk_test_51KsTRVAP0C7RxDT0uiUbJJmJMRnP7ijbDLlO3B1FSfNpRW5FMgbZ7YgTzKcNRXAERgcvjWvsZKLdZMZovyjlxeVX00Ssa2dzww',
           locale: 'auto',
           token: function (stripeToken: any) {
             console.log(stripeToken);
@@ -139,6 +141,8 @@ export class EndedMissionsClientComponent implements OnInit {
     }
   }
 
+
+
   pay(data: any) {
     this.checkout.paywithkonnect(data).subscribe(response => {
       this.paydata = response;
@@ -149,6 +153,11 @@ export class EndedMissionsClientComponent implements OnInit {
       console.log(response);
     });
   }
+
+
+
+
+
 
   delete(id: any, i: number) {
     Swal.fire({
@@ -219,7 +228,7 @@ export class EndedMissionsClientComponent implements OnInit {
 
   ratingClient(id: any) {
     this.usersService.ratingclient(id).subscribe(data => {
-      localStorage.setItem('count', JSON.stringify(data));
+      sessionStorage.setItem('count', JSON.stringify(data));
 
       console.log(this.data)
       this.count = data, (err: HttpErrorResponse) => {

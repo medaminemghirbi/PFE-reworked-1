@@ -10,49 +10,48 @@ import Swal from 'sweetalert2';
   styleUrls: ['./postulated-mission-freelancer.component.css']
 })
 export class PostulatedMissionFreelancerComponent implements OnInit {
-
+  p: number = 1;
   freelancerdata: any;
   messageErr: any;
   dataArray: any = [];
-  messageSuccess : any ;
-  submitted: boolean = false ;
-  searchedKeyword : any ;
-  p:number = 1 ;
-  
-  constructor(private route:Router, private usersService:UsersService) {
-    this.freelancerdata = JSON.parse( localStorage.getItem('freelancerdata') !);
+  messageSuccess: any;
+  submitted: boolean = false;
+  searchedKeyword!: string;
+  constructor(private route: Router, private usersService: UsersService) {
+    this.freelancerdata = JSON.parse(sessionStorage.getItem('freelancerdata')!);
     console.log(this.freelancerdata)
   }
   dataMission = {
-    id : '',
-    title:'',
-    description:''
+    id: '',
+    title: '',
+    description: ''
   }
   ngOnInit(): void {
     this.usersService.getrequestbyfreelancer(this.freelancerdata.id).subscribe(
-      (response:any)=>{
-      console.log(response)
-      
-      this.dataArray = response 
-      localStorage.setItem( 'status', JSON.stringify( response.status ) )
-      , (err:HttpErrorResponse)=>{
-        console.log(err)
-      this.messageErr="We dont't found this mission in our database"} 
-      //console.log(this.dataArray)
-    }) ;
+      (response: any) => {
+        console.log(response)
+
+        this.dataArray = response
+        sessionStorage.setItem('status', JSON.stringify(response.status))
+          , (err: HttpErrorResponse) => {
+            console.log(err)
+            this.messageErr = "We dont't found this mission in our database"
+          }
+        //console.log(this.dataArray)
+      });
   }
 
-  key = 'id' ;
-  reverse: boolean = false ;
+  key = 'id';
+  reverse: boolean = false;
 
   sort(key: string) {
-    this.key = key ;
-    this.reverse = !this.reverse ;
+    this.key = key;
+    this.reverse = !this.reverse;
   }
 
 
 
-  delete(id:any  , i :number){
+  delete(id: any, i: number) {
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -63,9 +62,9 @@ export class PostulatedMissionFreelancerComponent implements OnInit {
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.usersService.deleteRequest(id).subscribe(response=>{
+        this.usersService.deleteRequest(id).subscribe(response => {
           console.log(response)
-          this.dataArray.splice(i,1)   
+          this.dataArray.splice(i, 1)
         })
         Swal.fire(
           'Deleted!',
@@ -74,17 +73,17 @@ export class PostulatedMissionFreelancerComponent implements OnInit {
         )
       }
     })
-   
-    
+
+
   }
-  
-    getdata(title:string,description:string,id:any){
-      this.messageSuccess=''
-      this.dataMission.title=title
-      this.dataMission.description=description
-      this.dataMission.id=id
-      console.log(this.dataMission)
-  
-    }
+
+  getdata(title: string, description: string, id: any) {
+    this.messageSuccess = ''
+    this.dataMission.title = title
+    this.dataMission.description = description
+    this.dataMission.id = id
+    console.log(this.dataMission)
+
+  }
 
 }

@@ -20,7 +20,7 @@ export class EducationComponent implements OnInit {
   id: any;
   addeducation!: FormGroup;
   constructor(public router: Router, public usersService: UsersService) {
-    this.freelancerdata = JSON.parse(localStorage.getItem('freelancerdata')!);
+    this.freelancerdata = JSON.parse(sessionStorage.getItem('freelancerdata')!);
     this.addeducation = new FormGroup({
       ecole: new FormControl('', [Validators.required]),
       dateDebut: new FormControl('', [Validators.required]),
@@ -64,7 +64,7 @@ export class EducationComponent implements OnInit {
 
     this.usersService.addschool(formData).subscribe(() => {
       console.log(data)
-
+      Swal.fire('Saved!', 'Education added succefully', 'success')
       window.location.reload();
 
     }, (err: HttpErrorResponse) => {

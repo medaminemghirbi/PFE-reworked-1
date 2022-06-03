@@ -60,23 +60,16 @@
             <div id="orange"><span class="fa fa-minus"></span></div>
             <form [formGroup]="languagefiltre">
               <div class="form-group">
-                <label for="exampleFormControlInput2">Find By Skills  </label>
-                <div id="orange"><span class="fa fa-minus"></span></div>
-                <ng-select 
-                class="form-control"
-                appendTo="body"
-                [multiple]="true" 
-                 appendTo="body" 
-                 id="exampleFormControlSelect2"
-                    formControlName="language_id"
-                [(ngModel)]="selectedDefaultLanguage"
-                (change)="missionbylanguages()" >
+              
+                <ng-select class="form-control" appendTo="body" [multiple]="true" appendTo="body"
+                  id="exampleFormControlSelect2" formControlName="language_id" [(ngModel)]="selectedDefaultLanguage"
+                  (change)="missionbylanguages()">
                   <ng-option *ngFor="let l of languages" [value]="l.id">{{l.name}}</ng-option>
-               </ng-select>
-    
+                </ng-select>
+
               </div>
             </form>
-  
+
 
           </div>
         </div>
@@ -94,11 +87,11 @@
             <div class="input-group">
               <input type="text" name="title" class="form-control" [(ngModel)]="searchedKeyword"
                 placeholder="Search for...">
-  
+
             </div>
           </form>
 
-          
+
           <div class="card col-md-12 p-3" *ngFor="let produit of dataArray | filter:searchedKeyword ; index as i ">
             <div *ngIf="produit !=null" class="row ">
 

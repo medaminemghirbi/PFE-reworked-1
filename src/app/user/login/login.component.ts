@@ -35,10 +35,13 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
+
     const data = {
       email: this.user.email,
       password: this.user.password,
+
     };
+
     this.UsersSErvice.login(data).subscribe(
       response => {
         console.log(response);
@@ -50,23 +53,25 @@ export class LoginComponent implements OnInit {
             text: 'User Not Found Or invalide Credentialns'
           })
         } else {
+
+
           if (response.user.email_confirmed == true) {
             if (response.logged_in == true && response.role == "admin") {
-              localStorage.setItem('admindata', JSON.stringify(response.user));
-              localStorage.setItem('logged_in', JSON.stringify(response.logged_in));
-              localStorage.setItem('role', JSON.stringify(response.role));
+              sessionStorage.setItem('admindata', JSON.stringify(response.user));
+              sessionStorage.setItem('logged_in', JSON.stringify(response.logged_in));
+              sessionStorage.setItem('role', JSON.stringify(response.role));
               console.log(response);
               this.route.navigate(['/dashboard-admin']);
             }
             else if (response.logged_in == true && response.role == "client") {
-              localStorage.setItem('clientdata', JSON.stringify(response.user));
-              localStorage.setItem('logged_in', JSON.stringify(response.logged_in));
-              localStorage.setItem('role', JSON.stringify(response.role));
+              sessionStorage.setItem('clientdata', JSON.stringify(response.user));
+              sessionStorage.setItem('logged_in', JSON.stringify(response.logged_in));
+              sessionStorage.setItem('role', JSON.stringify(response.role));
               this.route.navigate(['/dashboard-client']);
             } else if (response.logged_in == true && response.role == "freelancer") {
-              localStorage.setItem('freelancerdata', JSON.stringify(response.user));
-              localStorage.setItem('logged_in', JSON.stringify(response.logged_in));
-              localStorage.setItem('role', JSON.stringify(response.role));
+              sessionStorage.setItem('freelancerdata', JSON.stringify(response.user));
+              sessionStorage.setItem('logged_in', JSON.stringify(response.logged_in));
+              sessionStorage.setItem('role', JSON.stringify(response.role));
               this.route.navigate(['/dashboard-freelancer']);
             }
             else {
@@ -84,8 +89,12 @@ export class LoginComponent implements OnInit {
               text: 'account created but not confirmed!, check Your EMail'
             })
           }
+
         }
+
       }, (err: HttpErrorResponse) => this.messageError = err.error.error);
-    }
+
+  }
+
 
 }

@@ -23,19 +23,18 @@ export class DashboardFreelancerComponent implements OnInit {
   countAllFreelancerr: any;
 
   constructor(private usersService: UsersService) {
-    this.freelancerdata = JSON.parse(localStorage.getItem('freelancerdata')!);
+    this.freelancerdata = JSON.parse(sessionStorage.getItem('freelancerdata')!);
     console.log(this.freelancerdata)
 
-    this.countAllFreelancerr = JSON.parse(localStorage.getItem('countAllFreelancerr')!);
+    this.countAllFreelancerr = JSON.parse(sessionStorage.getItem('countAllFreelancerr')!);
 
   }
   ngOnInit(): void {
 
     this.usersService.countAllFreelancer(this.freelancerdata.id).subscribe(data => {
 
-      console.log(data.data[0])
-      localStorage.setItem('countAllFreelancerr', JSON.stringify(data.data[0]));
-      
+      console.log(data)
+      sessionStorage.setItem('countAllFreelancerr', JSON.stringify(data.data[0]));
       this.dataArray = data, (err: HttpErrorResponse) => {
         console.log(err)
         this.messageErr = "We dont't found this user in our database"
@@ -58,7 +57,7 @@ export class DashboardFreelancerComponent implements OnInit {
           color: '#047886'
         },
 
-       
+
 
         {
           text: 'Freelancer Details',
@@ -71,11 +70,11 @@ export class DashboardFreelancerComponent implements OnInit {
                 text: "Full Name : " + this.freelancerdata.lastname + " " + this.freelancerdata.firstname,
                 fontSize: 20,
                 bold: true,
-      
+
                 decoration: 'underline',
                 color: 'skyblue'
               },
-              
+
             ],
             [
 
@@ -105,6 +104,7 @@ export class DashboardFreelancerComponent implements OnInit {
               { text: "Education : " + this.countAllFreelancerr.education },
               { text: "Language : " + this.countAllFreelancerr.language },
               { text: "Experience : " + this.countAllFreelancerr.experience },
+              { text: "Favorite  : " + this.countAllFreelancerr.favoris },
 
 
 
