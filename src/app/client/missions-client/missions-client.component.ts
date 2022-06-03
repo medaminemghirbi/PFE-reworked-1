@@ -3,18 +3,27 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UsersService } from 'src/app/services/users.service';
+
 import Swal from 'sweetalert2';
 import * as moment from 'moment';
+
+
 @Component({
   selector: 'app-missions-client',
   templateUrl: './missions-client.component.html',
   styleUrls: ['./missions-client.component.css']
 })
 export class MissionsClientComponent implements OnInit {
-
+  //language_id : any ;
   languages: { "id": number, "name": string }[] = []
   selectedDefaultLanguage: any
   languagedata: any = []
+
+  dropdownList: any[] = [];
+  selectedItems: any;
+  test1: string = "";
+  dropdownSettings: any = {};
+
 
   p: number = 1;
   dataMission = {
@@ -24,7 +33,7 @@ export class MissionsClientComponent implements OnInit {
     duration: '',
     beginingDate: '',
     category_id: '',
-    language_id: '',
+    language_id: 0,
     budget: '',
 
   }
@@ -43,7 +52,6 @@ export class MissionsClientComponent implements OnInit {
   constructor(private usersService: UsersService, private route: Router) {
     this.clientdata = JSON.parse(sessionStorage.getItem('clientdata')!);
     console.log(this.clientdata)
-
     this.addmissionn = new FormGroup({
       title: new FormControl('', [Validators.required]),
       description: new FormControl('', [Validators.required]),
@@ -54,23 +62,39 @@ export class MissionsClientComponent implements OnInit {
       language_id: new FormControl('', [Validators.required]),
     });
 
+
+
   }
 
+  onItemSelect(item: any) {
+    this.selectedItems.push(item)
+    this.test1.concat(item.id)
+    debugger
+  }
+
+  onItemDeSelect(item: any) {
+    for (var i = 0; i < this.selectedItems.length; i++) {
+
+      if (this.selectedItems[i] === item.id) {
+
+        this.selectedItems.splice(i, 1);
+
+      }
+    }
+  }
+
+  onSelectAll(items: any) {
+    console.log(items);
+  }
 
   ngOnInit(): void {
-    this.usersService.getclientmission(this.clientdata.id).subscribe(data => {
-      console.log(data)
-      this.dataArray = data, (err: HttpErrorResponse) => {
-        console.log(err)
-        this.messageErr = "We dont't found this mission in our database"
-      }
-      //console.log(this.dataArray)
-    })
+
     /*-----Load Langugage---*/
     this.usersService.getAllLanguages().subscribe(language => {
       //debugger
       language.forEach((l: { [x: string]: any; }) => this.languages.push({ "id": l["id"], "name": l["name"] }));
       this.languagedata = language
+
       this.languagedata.forEach((element: any) => {
 
       });
@@ -79,6 +103,31 @@ export class MissionsClientComponent implements OnInit {
         this.messageErr = "We dont't found this langugae in our database"
       }
     })
+
+    this.dropdownList = this.languages
+
+
+
+    this.dropdownSettings = {
+      singleSelection: false,
+      idField: 'id',
+      textField: 'name',
+      selectAllText: 'Select All',
+      unSelectAllText: 'UnSelect All',
+      itemsShowLimit: 3,
+      allowSearchFilter: true
+    };
+
+
+    this.usersService.getclientmission(this.clientdata.id).subscribe(data => {
+      console.log(data)
+      this.dataArray = data, (err: HttpErrorResponse) => {
+        console.log(err)
+        this.messageErr = "We dont't found this mission in our database"
+      }
+      //console.log(this.dataArray)
+    })
+
 
     /*------------- categories -------------------------- */
     this.usersService.getAllcategories().subscribe(data => {
@@ -139,7 +188,7 @@ export class MissionsClientComponent implements OnInit {
 
   }
 
-  getdata(title: string, description: string, duration: string, beginingDate: string, budget: string, category_id: string, language_id: string, id: any) {
+  getdata(title: string, description: string, duration: string, beginingDate: string, budget: string, category_id: string, language_id: number, id: any) {
     this.messageSuccess = ''
     this.dataMission.title = title
 
@@ -148,15 +197,14 @@ export class MissionsClientComponent implements OnInit {
     this.dataMission.beginingDate = beginingDate
     this.dataMission.budget = budget
     this.dataMission.category_id = category_id
-    this.dataMission.language_id = language_id
-
+    this.dataMission.language_id = 4
+    debugger
     this.dataMission.description = description
     this.dataMission.id = id
     console.log(this.dataMission)
 
   }
   updatemission(f: any) {
-
     let data = f.value
     const formData = new FormData();
     formData.append('title', this.addmissionn.value.title);
@@ -168,9 +216,10 @@ export class MissionsClientComponent implements OnInit {
     formData.append('client_id', this.clientdata.id);
     formData.append('language_id', this.addmissionn.value.language_id);
 
-
+    debugger
     this.usersService.updateMission(this.dataMission.id, formData).subscribe((response) => {
       this.date = moment(Date.now()).format("YYYY-MM-DD");
+      debugger
       if (data.beginingDate > this.date) {
         console.log(response)
         this.submitted = true;
@@ -183,8 +232,10 @@ export class MissionsClientComponent implements OnInit {
         this.dataArray[indexId].beginingDate = data.beginingDate
         this.dataArray[indexId].budget = data.budget
         this.dataArray[indexId].category_id = data.category_id
+        //this.dataArray[indexId].language_id = 4
         this.dataArray[indexId].language_id = data.language_id
-
+        debugger
+        this.selectedItems = data.language_id
         this.messageSuccess = `this title : ${this.dataArray[indexId].title} is updated`
         Swal.fire('Whooa!', 'Mission Succeffulfy updated !', 'success')
         //window.location.reload();

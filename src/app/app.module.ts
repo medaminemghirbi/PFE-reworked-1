@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ButtonsModule, CardsModule, ChartsModule, MDBBootstrapModule, TableModule } from 'angular-bootstrap-md';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -129,6 +130,7 @@ import { GeneratecontratclientComponent } from './client/generatecontratclient/g
     NgxPaginationModule,
     TableModule,
     BrowserAnimationsModule,
+    NgMultiSelectDropDownModule.forRoot()
 
 
 

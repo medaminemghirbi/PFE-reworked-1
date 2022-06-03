@@ -113,7 +113,9 @@
                     &nbsp;</a>
 
                   <br><br>
-                </div>
+                </div> 
+                <button  class="btn btn-danger" *ngIf="produit.completed"> Offre expired
+                </button> <br> <br>
 
                 <div class="form-group">
                   <button *ngIf="role!=='client' && role!=='admin' " class="btn btn-danger" type="submit"
@@ -123,7 +125,7 @@
 
 
                   <button *ngIf="role!=='client' && role!=='admin' " class="btn btn-danger" type="submit"
-                    (click)="addrequest(produit.id,freelancerdata.id)"> Postuler </button>
+                    (click)="addrequest( produit.id )"> Postuler </button>
 
                 </div>
 

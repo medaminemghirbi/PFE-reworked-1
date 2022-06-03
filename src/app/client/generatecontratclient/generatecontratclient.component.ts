@@ -130,12 +130,15 @@ export class GeneratecontratclientComponent implements OnInit {
                 text: "Full Name : " + this.missiondetails.map(function (a: any) { return a.freelancer.lastname + " " + a.freelancer.firstname; }),
                 bold: true
               },
-              { text: "Freelancer Email : " + this.missiondetails.map(function (a: any) { return a.freelancer.email ; }),
-             },
-              { text: "Phone Number : " + this.missiondetails.map(function (a: any) { return a.freelancer.phone ; }),
-             },
-              { text: "Freelancer Adress : " + this.missiondetails.map(function (a: any) { return a.freelancer.adresse ; }),
-             }
+              {
+                text: "Freelancer Email : " + this.missiondetails.map(function (a: any) { return a.freelancer.email; }),
+              },
+              {
+                text: "Phone Number : " + this.missiondetails.map(function (a: any) { return a.freelancer.phone; }),
+              },
+              {
+                text: "Freelancer Adress : " + this.missiondetails.map(function (a: any) { return a.freelancer.adresse; }),
+              }
             ],
             [
 
@@ -216,7 +219,7 @@ export class GeneratecontratclientComponent implements OnInit {
           color: 'Red'
         },
 
-        
+
         {
           text: 'Client Details',
           style: 'sectionHeader'
@@ -248,12 +251,15 @@ export class GeneratecontratclientComponent implements OnInit {
                 text: "Full Name : " + this.missiondetails.map(function (a: any) { return a.freelancer.lastname + " " + a.freelancer.firstname; }),
                 bold: true
               },
-              { text: "Freelancer Email : " + this.missiondetails.map(function (a: any) { return a.freelancer.email ; }),
-             },
-              { text: "Phone Number : " + this.missiondetails.map(function (a: any) { return a.freelancer.phone ; }),
-             },
-              { text: "Freelancer Adress : " + this.missiondetails.map(function (a: any) { return a.freelancer.adresse ; }),
-             }
+              {
+                text: "Freelancer Email : " + this.missiondetails.map(function (a: any) { return a.freelancer.email; }),
+              },
+              {
+                text: "Phone Number : " + this.missiondetails.map(function (a: any) { return a.freelancer.phone; }),
+              },
+              {
+                text: "Freelancer Adress : " + this.missiondetails.map(function (a: any) { return a.freelancer.adresse; }),
+              }
             ],
             [
 
@@ -335,7 +341,7 @@ export class GeneratecontratclientComponent implements OnInit {
           color: 'Red'
         },
 
-        
+
         {
           text: 'Client Details',
           style: 'sectionHeader'
@@ -367,12 +373,15 @@ export class GeneratecontratclientComponent implements OnInit {
                 text: "Full Name : " + this.missiondetails.map(function (a: any) { return a.freelancer.lastname + " " + a.freelancer.firstname; }),
                 bold: true
               },
-              { text: "Freelancer Email : " + this.missiondetails.map(function (a: any) { return a.freelancer.email ; }),
-             },
-              { text: "Phone Number : " + this.missiondetails.map(function (a: any) { return a.freelancer.phone ; }),
-             },
-              { text: "Freelancer Adress : " + this.missiondetails.map(function (a: any) { return a.freelancer.adresse ; }),
-             }
+              {
+                text: "Freelancer Email : " + this.missiondetails.map(function (a: any) { return a.freelancer.email; }),
+              },
+              {
+                text: "Phone Number : " + this.missiondetails.map(function (a: any) { return a.freelancer.phone; }),
+              },
+              {
+                text: "Freelancer Adress : " + this.missiondetails.map(function (a: any) { return a.freelancer.adresse; }),
+              }
             ],
             [
 
